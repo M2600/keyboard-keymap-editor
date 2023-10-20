@@ -6,6 +6,7 @@
 //#include "HID.h"
 #include <Adafruit_NeoPixel.h>
 #include <EEPROM.h>
+#include "keymap.h"
 //===================================
 //Keyboard
 
@@ -213,7 +214,7 @@ Adafruit_NeoPixel statusLED(numpixels1, statusLEDPin, NEO_GRB + NEO_KHZ800);
 
 
 // keyMap ～ as you like!! ～
-const byte keyMap[sizeof(row) / 2 * 16][sizeof(col) / 2] = {
+/*const byte keyMap[sizeof(row) / 2 * 16][sizeof(col) / 2] = {
   //left
   {KEY_ESCP, KEY_FU1,  KEY_FU2,  KEY_FU3,  KEY_FU4,  KEY_FU5,  KEY_FU6,  NONE     },
   {KEY_GRV,  KEY_1,    KEY_2,    KEY_3,    KEY_4,    KEY_5,    KEY_6,    NONE     },
@@ -360,7 +361,7 @@ const byte keyMap[sizeof(row) / 2 * 16][sizeof(col) / 2] = {
   {KEY_FU9,  KEY_KEYPAD_0, KEY_KEYPAD_1, KEY_KEYPAD_2, KEY_KEYPAD_3, KEY_SLSH, KEY_UP,   KEY_RSFT },
   {KEY_BSPC, KEY_LSFT,     KEY_LOWE,     KEY_RALT,       KEY_FN,     KEY_LEFT, KEY_DOWN, KEY_RGHT },
   {KEY_ENT,   NONE,     NONE,   NONE,         NONE,         NONE,     NONE,     NONE,    }
-};
+};*/
 
 //backLed============================================================
 
