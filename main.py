@@ -220,7 +220,7 @@
 
 
 
-
+import pyduinocli 
 
 
 
@@ -230,12 +230,22 @@ class keymap_generator:
         self.keymapTemplata_dir = 'keymap_template'
         self.keymapRow = 7 * 16  # 7 rows each 16 profiles
         self.keymapCol = 8       # 8 columns    
-
+        # Read keymap template
         with open(self.keymapTemplata_dir, 'r') as f:
             self.keymapTemplate = f.read()
 
     
     def generate_keymap_file(self, keymap):
+        # Check keymap size
+        if len(keymap) != self.keymapRow:
+            print('keymap row size error')
+            return
+        else:
+            for row in keymap:
+                if isinstance(row, list) or len(row) != self.keymapCol:
+                    print('keymap column size error')
+                    return
+        # Generate keymap file
         keymap_text = self.keymapTemplate + self.generate_cpp_array_from_python_array('const byte keyMap', keymap)
         with open('keymap.h', 'w') as f:
             f.write(keymap_text)
@@ -273,6 +283,9 @@ def main():
     generater = keymap_generator()
     generater.generate_keymap_file(arr)
 
+    arduino = pyduinocli.Arduino('arduino-cli')
+    bords = arduino.board.list()
+    print(bords)
 
 if __name__ == '__main__':
     main()
