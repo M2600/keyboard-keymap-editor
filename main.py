@@ -235,11 +235,26 @@ class keymap_generator:
             self.keymapTemplate = f.read()
 
     
-    def generate_cpp_array_from_python_array(self, keymap):
+    def generate_keymap_file(self, keymap):
+        keymap_text = self.keymapTemplate + self.generate_cpp_array_from_python_array('const byte keyMap', keymap)
+        with open('keymap.h', 'w') as f:
+            f.write(keymap_text)
+
+    def generate_cpp_array_from_python_array(self, arrayName, keymap):
         self.cpp_array = ''
+        self.array_size = ''
+        self.get_array_size(keymap)
+        self.cpp_array += arrayName + self.array_size + ' = \n'
         self.convert_array(keymap)
-        self.cpp_array = self.cpp_array[:-2]  # Remove last comma if last element.
+        self.cpp_array = self.cpp_array[:-2] + ';\n'  # Remove last comma if last element.
         return self.cpp_array
+    
+    def get_array_size(self, array):
+        if isinstance(array, list):
+            self.array_size += '[' + str(len(array)) + ']'
+            self.get_array_size(array[0])
+        else:
+            return self.array_size
 
     def convert_array(self, array):
         self.cpp_array += '{'
@@ -255,8 +270,8 @@ class keymap_generator:
 arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 def main():
-    kgenerater = keymap_generator()
-    print(kgenerater.generate_cpp_array(arr))
+    generater = keymap_generator()
+    generater.generate_keymap_file(arr)
 
 
 if __name__ == '__main__':
