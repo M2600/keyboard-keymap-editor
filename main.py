@@ -221,6 +221,7 @@
 
 
 import pyduinocli 
+import os
 
 
 
@@ -283,7 +284,11 @@ def main():
     generater = keymap_generator()
     generater.generate_keymap_file(arr)
 
-    arduino = pyduinocli.Arduino('arduino-cli')
+    if os.name == 'nt':
+        arduinoCli_path = 'arduino-cli/arduino-cli.exe'
+    elif os.name == 'posix':
+        arduinoCli_path = 'arduino-cli'
+    arduino = pyduinocli.Arduino(arduinoCli_path)
     bords = arduino.board.list()
     print(bords)
 
