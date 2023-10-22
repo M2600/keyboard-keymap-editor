@@ -351,7 +351,8 @@ class keymap_generator:
 
     def __init__(self):
         self.keymapTemplata_dir = 'keymap_template'
-        self.keymapFile_dir = 'keymap.h'
+        #self.keymapFile_dir = 'keymap.h'
+        self.keymapFile_dir = './KeyboardNico/KeyboardNico/keymap.h'
         self.keymapRow = 7 * 16  # 7 rows each 16 profiles
         self.keymapCol = 8       # 8 columns    
         # Read keymap template
