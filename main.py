@@ -352,7 +352,7 @@ class keymap_generator:
     def __init__(self):
         self.keymapTemplata_dir = 'keymap_template'
         #self.keymapFile_dir = 'keymap.h'
-        self.keymapFile_dir = './KeyboardNico/KeyboardNico/keymap.h'
+        self.keymapFile_dir = 'KeyboardNico/KeyboardNico/keymap.h'
         self.keymapRow = 7 * 16  # 7 rows each 16 profiles
         self.keymapCol = 8       # 8 columns    
         # Read keymap template
@@ -407,22 +407,65 @@ class keymap_generator:
         self.cpp_array = self.cpp_array[:-2] # Remove last comma if last element.
         self.cpp_array += '},\n'
 
+class arduino_uploader:
+    def __init__(self):
+        if os.name == 'nt':
+            arduinoCli_path = 'arduino-cli/arduino-cli.exe'
+        elif os.name == 'posix':
+            arduinoCli_path = 'arduino-cli'
+        else:
+            print('OS not supported')
+            return
+        try:
+            self.arduino = pyduinocli.Arduino(arduinoCli_path)
+        except Exception as e:
+            print(e)
+            return
+
+    def hardware_selecter(self):
+        self.boards = self.arduino.board.list()
+        print(str(len(self.boards['result'])) + ' board(s) found. select board with index.')
+        for i, board in enumerate(self.boards['result']):
+            print(str(i) + ': ' + board['matching_boards'][0]['name'] + '  ' + board['port']['address'])
+        while True:
+            self.input = input('select board: ')
+            try:
+                print('Selected: \"' + self.boards['result'][int(self.input)]['matching_boards'][0]['name'] + '\": \"' + self.boards['result'][int(self.input)]['port']['address'] + '\"')
+                return i
+            except(Exception):
+                print('Invalid input')
+                continue
+
+    def upload(self, sketch_dir, board_index):
+        try:
+            self.compile_result = self.arduino.compile(sketch_dir, fqbn=self.boards['result'][board_index]['matching_boards'][0]['fqbn'])
+        except pyduinocli.ArduinoError as e:
+            #print(e)
+            print('Compile failed')
+            return
+        else:
+            print('Compile success')
+
+        try:
+            self.arduino.upload(sketch_dir, fqbn=self.boards['result'][board_index]['matching_boards'][0]['fqbn'], port=self.boards['result'][board_index]['port']['address'])
+        except pyduinocli.ArduinoError as e:
+            print(e.result['__stderr'])
+            print('Upload failed')
+            return
+        else:
+            print('Upload success')
+
+
 
 
 def main():
     generater = keymap_generator()
     generater.generate_keymap_file(testKeyMap)
 
-    if os.name == 'nt':
-        arduinoCli_path = 'arduino-cli/arduino-cli.exe'
-    elif os.name == 'posix':
-        arduinoCli_path = 'arduino-cli'
-    else:
-        print('OS not supported')
-        return
-    arduino = pyduinocli.Arduino(arduinoCli_path)
-    bords = arduino.board.list()
-    print(bords)
+    uploader = arduino_uploader()
+    index = uploader.hardware_selecter()
+    uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', index)
+    
 
 if __name__ == '__main__':
     main()
