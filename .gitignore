@@ -3,4 +3,8 @@
 .vscode/*
 /keymap.h
 /KeyboardNico/KeyboardNico/keymap.h
+
+/test.py
+
+
 /.venv
