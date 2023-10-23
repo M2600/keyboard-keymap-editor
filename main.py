@@ -348,7 +348,9 @@ def main():
     generater.generate_keymap_file(testKeyMap, 'KeyboardNico/KeyboardNico/keymap.h')
 
     uploader = arduino_uploader()
-    uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', uploader.hardware_selecter())
+    board_index = uploader.hardware_selecter()
+    if board_index >= 0:
+        uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', )
     
 
 if __name__ == '__main__':

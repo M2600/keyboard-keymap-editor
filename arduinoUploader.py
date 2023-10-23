@@ -11,15 +11,22 @@ class arduino_uploader:
         else:
             print('OS not supported')
             return
+        self.arduino = pyduinocli.Arduino(arduinoCli_path)
         try:
-            self.arduino = pyduinocli.Arduino(arduinoCli_path)
+            self.arduino.board.list()
         except Exception as e:
             print(e)
+            print(arduinoCli_path + 'doesn\'t work.')
             return
 
     def hardware_selecter(self):
+        print('Detecting Arduino boards...')
         self.boards = self.arduino.board.list()
-        print(str(len(self.boards['result'])) + ' board(s) found. select board with index.')
+        if len(self.boards['result']) < 1:
+            print('No arduino board detected.')
+            return -1
+        else:
+            print(str(len(self.boards['result'])) + ' board(s) found. select board with index.')
         for i, board in enumerate(self.boards['result']):
             try:
                 board_name = board['matching_boards'][0]['name']
