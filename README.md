@@ -10,7 +10,7 @@ Graphical keyboard layout editor for [numeric-keypad](https://github.com/m2600/n
 - pyduinocli
 
 ## Requirements (Linux)
-Linux based OS need to install following packages.
+Linux based systems need to install following packages.
 
 - Python3
 - Arduino-cli
@@ -25,7 +25,7 @@ Linux based OS need to install following packages.
 ## Usage (Linux)
 
 
-Your user account is needed to add to system group to access USB device.
+Linux based systems need to add user account to system group to access USB device.
 
 
 ### Arch Linux
