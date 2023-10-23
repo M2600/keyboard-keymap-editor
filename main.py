@@ -341,7 +341,7 @@ testKeyMap = [
     ]]
 
 from arduinoUploader import arduino_uploader
-from keymapGenerater import keymap_generator
+from keymapGenerator import keymap_generator
 
 def main():
     generater = keymap_generator(keymapTemplate_dir='keymap_template')
