@@ -350,7 +350,7 @@ def main():
     uploader = arduino_uploader()
     board_index = uploader.hardware_selecter()
     if board_index >= 0:
-        uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', )
+        uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', board_index)
     
 
 if __name__ == '__main__':
