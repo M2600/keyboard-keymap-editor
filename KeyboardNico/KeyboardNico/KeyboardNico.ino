@@ -42,7 +42,7 @@ bool leftSide;
 #define KEY_MHUP 0x12
 #define KEY_MHDW 0x13
 
-#define KEY_KLCK 0x14
+#define KEY_KLCK 0x14 //左右のarduinoどちらからかしか信号を送らないようにするためのキー
 
 #define KEY_ARLS 0x15 //all release
 

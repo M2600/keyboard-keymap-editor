@@ -83,16 +83,92 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchor = 0) {
     keyTop.style.borderWidth = '1px';
     keyTop.style.borderRadius = '3px';
 
+
+    const keyLabel = document.createElement('div');
+    keyLabel.id = 'label-' + id;
+    keyLabel.className = 'key-label';
+    keyLabel.style.left = x + (w * 0.25 / 2 / wrate) + 'px';
+    keyLabel.style.top = y + (h * 0.25 / 3 / hrate) + 'px';
+    keyLabel.style.width = w - (w * 0.25 / wrate) + 'px';
+    keyLabel.style.height = h - (h * 0.25 / hrate) + 'px';
+    keyLabel.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+    keyLabel.style.borderStyle = 'solid';
+    keyLabel.style.borderColor = 'rgba(0, 0, 0, 0)';
+    keyLabel.style.borderWidth = '1px';
+    keyLabel.style.borderRadius = '3px';
+
+    const Button = document.createElement('div');
+    Button.id = 'button-' + id;
+    Button.className = 'key-button';
+    Button.style.left = x + 'px';
+    Button.style.top = y + 'px';
+    Button.style.width = w + 'px';
+    Button.style.height = h + 'px';
+    Button.style.backgroundColor = 'rgba(0, 0, 0 ,0)';
+    Button.style.borderStyle = 'solid';
+    Button.style.borderColor = 'rgba(0, 0, 0, 0)';
+    Button.style.borderWidth = '1px';
+    Button.style.borderRadius = '3px';
+    Button.addEventListener('mouseover', function() {
+        keyBorder.style.borderWidth = '2px';
+        keyBorder.style.borderColor = 'lightgreen';
+    });
+    Button.addEventListener('mouseout', function() {
+        keyBorder.style.borderWidth = '1px';
+        keyBorder.style.borderColor = 'black';
+    });
+    Button.addEventListener('click', function() {
+        console.log('click: ' + id);
+    });
+
+
     keyboardBg.appendChild(key);
     key.appendChild(keyCap);
     keyCap.appendChild(keyBorder);
     keyCap.appendChild(keyTop);
-
-
-    
+    keyCap.appendChild(keyLabel);
+    keyCap.appendChild(Button);
 }
 
+function keyboard_1(){
+    //keyName = { 'key_name': ['label', 'key_code', 'description'], ... }
+    var keyName = {
+        'NONE': ['NONE', 'NONE', ''],
+        'FN': ['FN', 'KEY_FN',''],
+        'CHANGE_PROFILE': ['CHPRFL', 'KEY_CPFL', 'Change profile.'], // Change Profile
+        'CHANGE_COLOR': ['CHCPRFL', 'KEY_CLPF', 'Change LED color.'],  // Change LED Color
+        'RAISE': ['RAISE', 'KEY_RAIS', 'Keyboard\'s profile change to \"RAISE\" while holding this key.'],
+        'LOWER': ['LOWER', 'KEY_LOWE', 'Keyboard\'s profile change to \"LOWER\" while holding this key.'],
+        
+        'MAIL': ['MAIL', 'KEY_MAIL', ''],
+        'FOR': ['FOR', 'KEY_FOR', ''],
+        'IF': ['IF', 'KEY_IF', ''],
 
+        'MUTE_SOUND': ['MUTE', 'KEY_MUTE', ''],
+        'VOLUME_UP': ['VOLUP', 'KEY_VOLUMEUP', ''],
+        'VOLUME_DOWN': ['VOLDOWN', 'KEY_VOLUMEDOWN', ''],
+
+        'MOUSE_UP': ['MUP', 'KEY_MUP', 'Mouse move up.'], // Mouse move up
+        'MOUSE_DOWN': ['MDOWN', 'KEY_MDWN', 'Mouse move down.'], // Mouse move down
+        'MOUSE_LEFT': ['MLEFT','KEY_MLFT', 'Mouse move left.'], // Mouse move left
+        'MOUSE_RIGHT': ['MRIGHT', 'KEY_MRIT', 'Mouse move right.'], // Mouse move right
+        'MOUSE_LEFT_CLICK': ['MLCLk', 'KEY_MLCL', 'Mouse left click.'], // Mouse left click
+        'MOUSE_RIGHT_CLICK': ['MRCLK', 'KEY_MRCL', 'Mouse right click.'], // Mouse right click
+        'MOUSE_WHEEL_UP': ['MWUP', 'KEY_MHUP', 'Mouse wheel up.'], // Mouse wheel up
+        'MOUSE_WHEEL_DOWN': ['MWDOWN', 'KEY_MHDW', 'Mouse wheel down.'], // Mouse wheel down
+
+        'DUAL_CONNECT_MODE': ['DUAL', 'KEY_KLCK', ''], // 左右どちらかのArudinoからしか信号が送信されないようにするためのモード
+
+        'ALL_RELEASE': ['ARELEASE', 'KEY_ARLS', 'Release all key. For development.'], // 全てのキーをリリースする
+
+        'ENTER': ['ENTER', 'KEY_ENT', ''],
+        'ESCAPE': ['ESC', 'KEY_ESCP', ''],
+        'BACKSPACE': ['BACK', 'KEY_BSPC', ''],
+        'DELETE': ['DEL', 'KEY_DEL', ''],
+        'TAB': ['TAB', 'KEY_TB', ''],
+        
+    }
+}
 
 createKey('11', 0, 0, 1, 1);
 createKey('12', 1.5, 0, 1, 1);
