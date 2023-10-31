@@ -61,10 +61,10 @@ bool leftSide;
 #define KEY_RALT 0x86 //Rightalt
 #define KEY_RGUI 0x87 //Rightgui
 
-#define KEY_PSCR   0xCE
-#define KEY_SLCK  0xCF
-#define KEY_PAUS  0xD0
-#define KEY_INS  0xD1
+#define KEY_PSCR   0xCE //Printscreen
+#define KEY_SLCK  0xCF //Scrolllock
+#define KEY_PAUS  0xD0 //Pause
+#define KEY_INS  0xD1 //Insert
 
 #define KEY_PGUP 0xD3 //Pageup
 #define KEY_PGDN 0xD6 //Pagedown
