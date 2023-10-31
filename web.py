@@ -3,7 +3,7 @@ import eel
 
 
 
-def Keyboard_1():
+def keyboard_1():
     eel.createKey('11', 0, 0, 1, 1)
     eel.createKey('12', 1.5, 0, 1, 1)
     eel.createKey('13', 2.5, 0, 1, 1)
@@ -66,9 +66,20 @@ def main():
     eel.init('web')
     # Open in default browser
     #eel.start('main.html', mode='default', size=(600, 400))
-    Keyboard_1()
-    eel.start('main.html', size=(800, 600))
+
+    eel.createKey('11', 0, 0, 1, 1)
+    eel.createKey('12', 1, 0, 2, 1)
+    eel.keyBoard_bg_resize()
+
+    #keyboard_1()
+
+    eel.justOutput('test')
+
+    eel.start('main.html', size=(800, 600), block=False)
     
+    while True:
+        eel.sleep(10.0)
+        eel.justOutput('test')
 
 
 if __name__ == '__main__':

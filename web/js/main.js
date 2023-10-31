@@ -170,11 +170,12 @@ var keyName = {
 const keyCapWidth = 54;
 const keyCapHeight = 54;
 
-var maxKeyPosX = 0;
-var maxKeyPosY = 0;
+
 
 eel.expose(keyBoard_bg_resize);
 function keyBoard_bg_resize() {
+    let maxKeyPosX = 0;
+    let maxKeyPosY = 0;
     keyboardBg = document.getElementById('keyboard-bg');
     keyBorders = keyboardBg.getElementsByClassName('key-border');
     //console.log(keyBorders);
@@ -298,8 +299,9 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchor = 0) {
     keyCap.appendChild(Button);
 }
 
-function keyboard_1(){
-    
+eel.expose(justOutput);
+function justOutput(val) {
+    console.log(val);
 }
 
 
