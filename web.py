@@ -1,5 +1,6 @@
 
 import eel
+import os, json
 
 
 
@@ -57,32 +58,86 @@ def keyboard_1():
     eel.keyBoard_bg_resize()
 
 
-@eel.expose
-def test(val):
-    print(val)
+layout_dir = 'layouts/'
+keymap_dir = 'keymaps/'
 
-list = [1, 2, 3, 4, 5]
-dictionary = {'a': ['a0', 'a1', 2], 'b': ['b0', 'b1', 2], 'c': ['c0', 'c1', 3]}
+class web_gui:
+    def __init__(self):
+        eel.init('web')
+        
+    ### @eel.expose付きで宣言した関数はJavaScriptから参照されるが、有効なselfは指定できないので、
+    #   その関数内でselfは参照しないようにする必要がある。
 
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def just_print(self, val):
+        print(val)
+
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def save_keymap(self, key_map, keymap_name):
+        layout_name = key_map['layout']
+        with open(keymap_dir + keymap_name + '.json', 'w') as f:
+            json.dump(key_map, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
+        print('save ' + layout_name + ', ' + keymap_name)
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def write(self, layout_name, keymap_name):
+        print('write: ' + layout_name + ', ' + keymap_name)
+
+    ### One argument are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def get_layout_list(self):
+        json_list = [
+            f.replace('.json', '') for f in os.listdir(layout_dir) if f.endswith('.json')
+        ]
+        print(json_list)
+        return json_list
+    
+    ### One argument are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def get_layout(self, layout_name):
+        print('get_layout: ' + layout_name)
+        layout_path = layout_dir + layout_name + '.json'
+        try:
+            with open(layout_path, 'r') as f:
+                layout = json.load(f)
+        except FileNotFoundError as e:
+            print(e)
+            return 'error: layout file "' + layout_path + '" not found.'
+        return layout
+    
+
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def load_keymap(self, keymap_name):
+        print('load_keymap: ' + keymap_name)
+
+
+    def load_layout(self, layout_name):
+        print('load_layout: ' + layout_name)
+        eel.createKeyboard(layout_name)
+
+    def start(self):
+        eel.start('main.html', size=(800, 600), block=False)
+        while True:
+            eel.sleep(1)
+
+    def createKey(self, x, y, w, h, rotate=0, ranchorX=0, ranchorY=0):
+        eel.createKey(x, y, w, h, rotate, ranchorX, ranchorY)
+
+    def keyBoard_bg_resize(self):
+        eel.keyBoard_bg_resize()
 
 def main():
-    eel.init('web')
-    # Open in default browser
-    #eel.start('main.html', mode='default', size=(600, 400))
-
-    eel.createKey('11', 0, 0, 1, 1)
-    eel.createKey('12', 1, 0, 2, 1)
-    eel.keyBoard_bg_resize()
-
-    #keyboard_1()
-
-    eel.justOutput(dictionary)
-
-    eel.start('main.html', size=(800, 600), block=False)
-    
-    while True:
-        eel.sleep(10.0)
-        eel.justOutput('test')
+    gui = web_gui()
+    gui.start()
 
 
 if __name__ == '__main__':

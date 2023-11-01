@@ -342,16 +342,25 @@ testKeyMap = [
 
 from arduinoUploader import arduino_uploader
 from keymapGenerator import keymap_generator
+import web
+import json
 
 def main():
     generater = keymap_generator(keymapTemplate_dir='keymap_template')
-    generater.generate_keymap_file(testKeyMap, 'KeyboardNico/KeyboardNico/keymap.h')
+    #generater.generate_keymap_file(testKeyMap, 'KeyboardNico/KeyboardNico/keymap.h')
 
     uploader = arduino_uploader()
-    board_index = uploader.hardware_selecter()
-    if board_index >= 0:
-        uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', board_index)
+    #board_index = uploader.hardware_selecter()
+    #if board_index >= 0:
+    #    uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', board_index)
     
+    layout_name = '3by3'
+
+    gui = web.web_gui()
+    gui.load_layout(layout_name)
+    gui.start()
+
+
 
 if __name__ == '__main__':
     main()

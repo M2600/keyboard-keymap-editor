@@ -10,6 +10,12 @@ function keyBoard_bg_resize() {
     let maxKeyPosY = 0;
     keyboardBg = document.getElementById('keyboard-bg');
     keyBorders = keyboardBg.getElementsByClassName('key-border');
+
+    // No key exists and keyboard-bg resize to 1 x 1 size.
+    if (keyBorders.length == 0) {
+        keyboardBg.style.width = keyCapWidth + 'px';
+        keyboardBg.style.height = keyCapHeight + 'px';
+    }
     //console.log(keyBorders);
     for (let i = 0; i < keyBorders.length; i++) {
         if (keyBorders[i].getBoundingClientRect().right > maxKeyPosX) {
@@ -40,7 +46,7 @@ function keyBoard_bg_resize() {
 
 
 eel.expose(createKey);
-function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchor = 0) {
+function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ranchorY = 0) {
 
     const x = keyCapWidth * xrate;
     const y = keyCapHeight * yrate;
@@ -131,6 +137,39 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchor = 0) {
     keyCap.appendChild(Button);
 }
 
+
+eel.expose(createKeyboard);
+function createKeyboard(layout_name) {
+    getLayout(layout_name).then((value) => {
+        let layout = value;
+        if (typeof layout !== 'object') {
+            return;
+        }
+        clearKeyboard();
+        layout.forEach((e, i) => {
+            e.forEach((e, j) => {
+                if (e.length < 4) {
+                    console.log('warning: key ' + i + ',' + j + ' is not enough length. Skip this key.');
+                }
+                else if (e.length < 7){
+                    e.concat([0, 0, 0]);
+                }
+                createKey(String(i) + String(j), e[0], e[1], e[2], e[3], rotate = e[4], ranchorX = e[5], ranchorY = e[6]);
+    })});
+    keyBoard_bg_resize();
+    });
+}
+
+eel.expose(clearKeyboard)
+function clearKeyboard(){
+    const keyboardBg = document.getElementById('keyboard-bg');
+    let keys = keyboardBg.getElementsByClassName('key');
+    while (keys.length > 0) {
+        keyboardBg.removeChild(keys[0]);
+    };
+    keyBoard_bg_resize();
+}
+
 eel.expose(justOutput);
 function justOutput(val) {
     console.log(val);
@@ -138,6 +177,37 @@ function justOutput(val) {
 
 
 
+
+async function pythonPrint() {
+    let ret = await eel.just_print()
+    console.log(ret);
+}
+
+async function getlayouts() {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let layoutList = await eel.get_layout_list('_')()
+    console.log(layoutList);
+    return layoutList;
+}
+
+async function getLayout(layoutName) {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let layout = await eel.get_layout('_', layoutName)();
+    console.log(layout);
+    return layout;
+}
+
+async function loadKeymap(keymapName) {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let ret = await eel.load_keymap('_', keymapName)();
+    console.log(ret);
+}
+
+async function saveKeymap(keymap, kaymapName) {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let ret = await eel.save_keymap('_', keymap, kaymapName)();
+    console.log(ret);
+}
 
 function main(){
     

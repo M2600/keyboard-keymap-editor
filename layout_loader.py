@@ -1,3 +1,7 @@
+import json
+import web
+
+
 #keyList = { 'key_name': ['label', 'key_code', 'description'], ... }
 keyList = {
     'NONE': ['NONE', 'NONE', ''],
@@ -167,6 +171,27 @@ keyList = {
 }
 
 
-keyboard_layout = {
+"""keyboard_layout = [
+    #left
+    [[0, 0, 1, 1],  [1.5, 0, 1, 1], [2.5, 0, 1, 1], [3.5, 0, 1, 1],  KEY_FU4,  KEY_FU5,  KEY_FU6,  NONE     ],
+    [KEY_GRV,  KEY_1,    KEY_2,    KEY_3,    KEY_4,    KEY_5,    KEY_6,    NONE     ],
+    [KEY_TB,   KEY_Q,    KEY_W,    KEY_E,    KEY_R,    KEY_T,    KEY_LPRN, NONE     ],
+    [KEY_CAPS, KEY_A,    KEY_S,    KEY_D,    KEY_F,    KEY_G,    KEY_LCBR, NONE     ],
+    [KEY_LSFT, KEY_Z,    KEY_X,    KEY_C,    KEY_V,    KEY_B,    ____,     NONE     ],
+    [KEY_LCTL, KEY_LGUI, KEY_FN,   KEY_LALT, KEY_RAIS, KEY_RSFT, KEY_DEL,  ____     ],
+    [NONE,     NONE,     NONE,     NONE,     NONE,     NONE,     KEY_SPC,  NONE     ]
+]"""
+
+
+
+
+def main():
+    layout_json_path = 'test_layout.json'
+    with open(layout_json_path, 'r') as f:
+        layout = json.load(f)
     
-}
+    
+
+
+if __name__ == '__main__':
+    main()
