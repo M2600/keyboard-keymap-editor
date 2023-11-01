@@ -61,6 +61,9 @@ def keyboard_1():
 def test(val):
     print(val)
 
+list = [1, 2, 3, 4, 5]
+dictionary = {'a': ['a0', 'a1', 2], 'b': ['b0', 'b1', 2], 'c': ['c0', 'c1', 3]}
+
 
 def main():
     eel.init('web')
@@ -73,7 +76,7 @@ def main():
 
     #keyboard_1()
 
-    eel.justOutput('test')
+    eel.justOutput(dictionary)
 
     eel.start('main.html', size=(800, 600), block=False)
     
