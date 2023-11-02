@@ -47,34 +47,17 @@
 
         <div id="key-property">
             <div id="key-property-menu">
-                <div id="key-property-menu-title">
-                    <h3>Key Properties</h3>
-                </div>
-                <div id="key-property-menu-body">
-                    <div id="key-property-menu-body-row">
-                        <div id="key-property-menu-body-row-col">
-                            <label for="key-property-menu-body-row-col-label">Label</label>
-                            <input type="text" id="key-property-menu-body-row-col-label" name="key-property-menu-body-row-col-label" placeholder="Label">
-                        </div>
-                        <div id="key-property-menu-body-row-col">
-                            <label for="key-property-menu-body-row-col-code">Code</label>
-                            <input type="text" id="key-property-menu-body-row-col-code" name="key-property-menu-body-row-col-code" placeholder="Code">
-                        </div>
-                    </div>
-                    <div id="key-property-menu-body-row">
-                        <div id="key-property-menu-body-row-col">
-                            <label for="key-property-menu-body-row-col-x">X</label>
-                            <input type="text" id="key-property-menu-body-row-col-x" name="key-property-menu-body-row-col-x" placeholder="X">
-                        </div>
-                        <div id="key-property-menu-body-row-col">
-                            <label for="key-property-menu-body-row-col-y">Y</label>
-                            <input type="text" id="key-property-menu-body-row-col-y" name="key-property-menu-body-row-col-y" placeholder="Y">
-                        </div>
-                    </div>
-                </div>
+                <ul id="key-property-menu-list">
+                    <li id="proerty-tab-button" class="key-property-menu-item active">Key Properties</li>
+                    <li id="description-tab-button" class="key-property-menu-item">Descriptions</li>
+                </ul>
             </div>
             <div id="key-property-body">
-
+                <div id="key-labels" class="key-prorety-body-item">
+                    <select id="key-labels-default-select" class="key-labels-select">
+                        <option value="default">Default</option>
+                        <option value="custom">Custom</option>
+                </div>
             </div>
         </div>
 
