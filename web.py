@@ -142,7 +142,7 @@ class web_gui:
 
     def load_layout(self, layout_name):
         print('load_layout: ' + layout_name)
-        eel.createKeyboard(layout_name)
+        eel.createKeyboard_py(layout_name)
 
     def start(self, html_file):
         eel.start(html_file, size=(800, 600), block=False)

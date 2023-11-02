@@ -138,7 +138,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
 }
 
 
-eel.expose(createKeyboard);
+//eel.expose(createKeyboard);
 async function createKeyboard(layout_name) {
     clearKeyboard();
     await getLayout(layout_name).then(async (value) => {
@@ -161,7 +161,7 @@ async function createKeyboard(layout_name) {
     });
 }
 
-eel.expose(createKeymap);
+//eel.expose(createKeymap);
 async function createKeymap(keymap_name) {
     getKeymap(keymap_name).then(async (value) => {
         let keymap = value;
@@ -200,7 +200,10 @@ function justOutput(val) {
     console.log(val);
 }
 
-
+eel.expose(createKeyboard_py);
+function createKeyboard_py(layout_name) {
+    createKeyboard(layout_name);
+}
 
 
 async function pythonPrint() {
