@@ -5,6 +5,84 @@ body {
     background-color: white;
 }
 
+.dropdown-menu {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    background-color: #fff;
+    border: solid 1px #ccc;
+    list-style: none;
+    text-align: left;
+    left: auto;
+    right: auto;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    top: 100%;
+}
+
+.dropdown-item {
+    padding: 3px 20px;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-align: left;
+}
+
+#keyboard-menu {
+    border-bottom: solid 1px #ccc;
+    padding: 10px 5px 10px;
+}
+
+.menu-item {
+    position: relative;
+}
+
+
+
+#keyboard-menu button {
+    padding: 6px 12px;
+    line-height: 1.42;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+#keyboard-menu #select-layout-button, #select-keymap-button {
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#keyboard-menu #select-layout-button:hover, #select-keymap-button:hover {
+    background-color: #eee !important;
+    cursor: pointer;
+} 
+
+#keyboard-menu #select-layout, #select-keymap {
+    display: inline-block;
+}
+
+#keyboard-menu #save-keymap, #write-keymap {
+    float: right;
+}
+
+#keyboard-menu #save-keymap-button, #write-keymap-button {
+    margin: 0 2px;
+    color: #fff;
+    background-color: #5cb85c;
+    border: solid 1px #4cae4c;
+    border-radius: 4px;
+}
+
+#keyboard-menu #save-keymap-button:hover, #write-keymap-button:hover{
+    background-color: #449d44;
+    cursor: pointer;
+}
+
+
+
+
+
 #keyboard {
     margin: 5px;
     padding: 4px;

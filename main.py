@@ -354,11 +354,9 @@ def main():
     #if board_index >= 0:
     #    uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', board_index)
     
-    layout_name = '3by3'
 
     gui = web.web_gui()
-    gui.load_layout(layout_name)
-    gui.start()
+    gui.start('main.html')
 
 
 

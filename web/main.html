@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/e59db79247.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/style.css">
     <script src="/eel.js"></script>
     <title>Keyboard-layout-editor</title>
@@ -13,11 +14,70 @@
     </header>
 
     <main id="main">
+        <div id="keyboard-menu">
+            <div id="menu-bar">
+                <div id="select-layout" class="menu-item">
+                    <button id="select-layout-button"><i class="fa-solid fa-upload fa-sm"></i> Load Layout <i class="fa-solid fa-caret-down fa-xs"></i></button>
+                    <ul id="select-layout-list" class="dropdown-menu">
+                        <!-- JS inputs something here -->
+                    </ul>
+                </div>
+                <div id="select-keymap" class="menu-item">
+                    <button id="select-keymap-button"><i class="fa-solid fa-upload fa-sm"></i> Load Keymap <i class="fa-solid fa-caret-down fa-xs"></i></button>
+                    <ul id="select-keymap-list", class="dropdown-menu">
+                        <!-- JS inputs something here -->
+                    </ul>
+                </div>
+
+                <div id="write-keymap" class="menu-item">
+                    <button id="write-keymap-button"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #ffffff;"></i> Write Keymap</button>
+                </div>
+                <div id="save-keymap" class="menu-item">
+                    <button id="save-keymap-button"><i class="fa-solid fa-download fa-xs" style="color: #ffffff;"></i> Save Keymap</button>
+                </div>
+                
+            </div>
+        </div>
+
         <div id="keyboard">
             <div id="keyboard-bg">
                 <!-- JS inputs something here... -->
             </div>
         </div>
+
+        <div id="key-property">
+            <div id="key-property-menu">
+                <div id="key-property-menu-title">
+                    <h3>Key Properties</h3>
+                </div>
+                <div id="key-property-menu-body">
+                    <div id="key-property-menu-body-row">
+                        <div id="key-property-menu-body-row-col">
+                            <label for="key-property-menu-body-row-col-label">Label</label>
+                            <input type="text" id="key-property-menu-body-row-col-label" name="key-property-menu-body-row-col-label" placeholder="Label">
+                        </div>
+                        <div id="key-property-menu-body-row-col">
+                            <label for="key-property-menu-body-row-col-code">Code</label>
+                            <input type="text" id="key-property-menu-body-row-col-code" name="key-property-menu-body-row-col-code" placeholder="Code">
+                        </div>
+                    </div>
+                    <div id="key-property-menu-body-row">
+                        <div id="key-property-menu-body-row-col">
+                            <label for="key-property-menu-body-row-col-x">X</label>
+                            <input type="text" id="key-property-menu-body-row-col-x" name="key-property-menu-body-row-col-x" placeholder="X">
+                        </div>
+                        <div id="key-property-menu-body-row-col">
+                            <label for="key-property-menu-body-row-col-y">Y</label>
+                            <input type="text" id="key-property-menu-body-row-col-y" name="key-property-menu-body-row-col-y" placeholder="Y">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="key-property-body">
+
+            </div>
+        </div>
+
     </main>
 
     <footer id="footer">

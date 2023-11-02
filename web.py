@@ -78,8 +78,8 @@ class web_gui:
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
     def save_keymap(self, key_map, keymap_name):
-        layout_name = key_map['layout']
-        with open(keymap_dir + keymap_name + '.json', 'w') as f:
+        layout_name = key_map['keymap']
+        with open(keymap_dir + keymap_name + '.keymap', 'w') as f:
             json.dump(key_map, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
         print('save ' + layout_name + ', ' + keymap_name)
     ### Two arguments are required when calling from Javascript. ###
@@ -93,8 +93,9 @@ class web_gui:
     @eel.expose
     def get_layout_list(self):
         json_list = [
-            f.replace('.json', '') for f in os.listdir(layout_dir) if f.endswith('.json')
+            f.replace('.layout', '') for f in os.listdir(layout_dir) if f.endswith('.layout')
         ]
+        print('get_layout_list: ', end='')
         print(json_list)
         return json_list
     
@@ -103,7 +104,7 @@ class web_gui:
     @eel.expose
     def get_layout(self, layout_name):
         print('get_layout: ' + layout_name)
-        layout_path = layout_dir + layout_name + '.json'
+        layout_path = layout_dir + layout_name + '.layout'
         try:
             with open(layout_path, 'r') as f:
                 layout = json.load(f)
@@ -116,16 +117,35 @@ class web_gui:
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
-    def load_keymap(self, keymap_name):
-        print('load_keymap: ' + keymap_name)
+    def get_keymap_list(self):
+        json_list = [
+            f.replace('.keymap', '') for f in os.listdir(keymap_dir) if f.endswith('.keymap')
+        ]
+        print('get_keymap_list: ', end='')
+        print(json_list)
+        return json_list
+    
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def get_keymap(self, keymap_name):
+        print('get_keymap: ' + keymap_name)
+        keymap_path = keymap_dir + keymap_name + '.keymap'
+        try:
+            with open(keymap_path, 'r') as f:
+                keymap = json.load(f)
+        except FileNotFoundError as e:
+            print(e)
+            return 'error: keymap file "' + keymap_path + '" not found.'
+        return keymap
 
 
     def load_layout(self, layout_name):
         print('load_layout: ' + layout_name)
         eel.createKeyboard(layout_name)
 
-    def start(self):
-        eel.start('main.html', size=(800, 600), block=False)
+    def start(self, html_file):
+        eel.start(html_file, size=(800, 600), block=False)
         while True:
             eel.sleep(1)
 

@@ -139,13 +139,13 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
 
 
 eel.expose(createKeyboard);
-function createKeyboard(layout_name) {
-    getLayout(layout_name).then((value) => {
+async function createKeyboard(layout_name) {
+    clearKeyboard();
+    await getLayout(layout_name).then(async (value) => {
         let layout = value;
         if (typeof layout !== 'object') {
             return;
         }
-        clearKeyboard();
         layout.forEach((e, i) => {
             e.forEach((e, j) => {
                 if (e.length < 4) {
@@ -155,10 +155,35 @@ function createKeyboard(layout_name) {
                     e.concat([0, 0, 0]);
                 }
                 createKey(String(i) + String(j), e[0], e[1], e[2], e[3], rotate = e[4], ranchorX = e[5], ranchorY = e[6]);
-    })});
-    keyBoard_bg_resize();
+            })
+        });
+        keyBoard_bg_resize();
     });
 }
+
+eel.expose(createKeymap);
+async function createKeymap(keymap_name) {
+    getKeymap(keymap_name).then(async (value) => {
+        let keymap = value;
+        //console.log(keymap)
+        if (typeof keymap !== 'object') {
+            return;
+        }
+        await createKeyboard(keymap['layout']);
+        
+        let keymap_default = keymap['keymap']['default'];
+        //console.log(keymap_default)
+        keymap_default.forEach((e, i) => {
+            e.forEach((f, j) => {
+                //console.log(String(i) + String(j) + f);
+                keyLabel = document.getElementById('label-' + String(i) + String(j));
+                //console.log(keyLabel)
+                keyLabel.innerHTML = String(f);
+            })
+        });
+    });
+}
+
 
 eel.expose(clearKeyboard)
 function clearKeyboard(){
@@ -186,21 +211,29 @@ async function pythonPrint() {
 async function getlayouts() {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
     let layoutList = await eel.get_layout_list('_')()
-    console.log(layoutList);
+    //console.log(layoutList);
     return layoutList;
 }
 
 async function getLayout(layoutName) {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
     let layout = await eel.get_layout('_', layoutName)();
-    console.log(layout);
+    //console.log(layout);
     return layout;
 }
 
-async function loadKeymap(keymapName) {
+async function getKeymaps() {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
-    let ret = await eel.load_keymap('_', keymapName)();
-    console.log(ret);
+    let keymapList = await eel.get_keymap_list('_')();
+    //console.log(keymapList);
+    return keymapList;
+}
+
+async function getKeymap(keymapName) {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let keymap = await eel.get_keymap('_', keymapName)();
+    //console.log(keymap);
+    return keymap;
 }
 
 async function saveKeymap(keymap, kaymapName) {
@@ -210,7 +243,82 @@ async function saveKeymap(keymap, kaymapName) {
 }
 
 function main(){
-    
+    //初期のキーボードの大きさを設定
+    let keyboardBg = document.getElementById('keyboard-bg');
+    keyboardBg.style.width = keyCapWidth + 'px';
+    keyboardBg.style.height = keyCapHeight + 'px';
+
+    let selectLayoutButton = document.getElementById('select-layout-button');
+    let layoutDropdown = document.getElementById('select-layout-list');
+    let selectKeymapButton = document.getElementById('select-keymap-button');
+    let keymapDropdown = document.getElementById('select-keymap-list');
+    selectLayoutButton.onclick = () => {
+        //console.log('show layout list')
+        layoutDropdown.style.display = 'block';
+        oldOptions = layoutDropdown.getElementsByTagName('li');
+        while (oldOptions.length > 0) {
+            layoutDropdown.removeChild(oldOptions[0]);
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.id != 'select-layout-button') {
+                layoutDropdown.style.display = 'none';
+            }
+        });
+        getlayouts().then((value) => {
+            value.forEach((e) => {
+                let option = document.createElement('li');
+                option.className = 'dropdown-item';
+                option.innerHTML = e;
+
+                option.addEventListener('mouseover', function() {
+                    option.style.backgroundColor = '#eee';
+                    option.style.cursor = 'pointer';
+                });
+                option.addEventListener('mouseout', function() {
+                    option.style.backgroundColor = 'white';
+                    option.style.cursor = 'default';
+                });
+                option.addEventListener('click', function() {
+                    createKeyboard(e);
+                });
+                layoutDropdown.appendChild(option);
+            }
+        )}
+    )};
+
+    selectKeymapButton.onclick = () => {
+        keymapDropdown.style.display = 'block';
+        oldOptions = keymapDropdown.getElementsByTagName('li');
+        while (oldOptions.length > 0) {
+            keymapDropdown.removeChild(oldOptions[0]);
+        }
+        document.addEventListener('click', function(e) {
+            if (e.target.id != 'select-keymap-button') {
+                keymapDropdown.style.display = 'none';
+            }
+        });
+        getKeymaps().then((value) => {
+            value.forEach((e) => {
+                let option = document.createElement('li');
+                option.className = 'dropdown-item';
+                option.innerHTML = e;
+
+                option.addEventListener('mouseover', function() {
+                    option.style.backgroundColor = '#eee';
+                    option.style.cursor = 'pointer';
+                });
+                option.addEventListener('mouseout', function() {
+                    option.style.backgroundColor = 'white';
+                    option.style.cursor = 'default';
+                });
+                option.addEventListener('click', function() {
+                    createKeymap(e);
+                });
+                keymapDropdown.appendChild(option);
+            })
+        })
+    };
+
 }
 
 main();

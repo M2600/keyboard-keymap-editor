@@ -1,0 +1,85 @@
+{
+    "keymap": {
+        "default": [
+            [
+                "1",
+                "2"
+            ],
+            [
+                "3",
+                "4"
+            ]
+        ],
+        "fn": [
+            [
+                "fn_1",
+                "fn_2"
+            ],
+            [
+                "fn_3",
+                "fn_4"
+            ]
+        ],
+        "game": [
+            [
+                "game_1",
+                "game_2"
+            ],
+            [
+                "game_3",
+                "game_4"
+            ]
+        ],
+        "game_fn": [
+            [
+                "game_fn_1",
+                "game_fn_2"
+            ],
+            [
+                "game_fn_3",
+                "game_fn_4"
+            ]
+        ],
+        "game_lower": [
+            [
+                "game_lower_1",
+                "game_lower_2"
+            ],
+            [
+                "game_lower_3",
+                "game_lower_4"
+            ]
+        ],
+        "game_raise": [
+            [
+                "game_raise_1",
+                "game_raise_2"
+            ],
+            [
+                "game_raise_3",
+                "game_raise_4"
+            ]
+        ],
+        "lower": [
+            [
+                "lower_1",
+                "lower_2"
+            ],
+            [
+                "lower_3",
+                "lower_4"
+            ]
+        ],
+        "raise": [
+            [
+                "raise_1",
+                "raise_2"
+            ],
+            [
+                "raise_3",
+                "raise_4"
+            ]
+        ]
+    },
+    "layout": "2by2"
+}
