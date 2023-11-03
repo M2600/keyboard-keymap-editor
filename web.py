@@ -156,9 +156,7 @@ class web_gui:
         eel.keyBoard_bg_resize()
 
 def main():
-    gui = web_gui()
-    gui.start()
-
+    pass
 
 if __name__ == '__main__':
     main()

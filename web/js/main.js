@@ -119,12 +119,49 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     Button.addEventListener('mouseover', function() {
         keyBorder.style.borderWidth = '2px';
         keyBorder.style.borderColor = 'lightgreen';
-    });
+    })
     Button.addEventListener('mouseout', function() {
         keyBorder.style.borderWidth = '1px';
         keyBorder.style.borderColor = 'black';
     });
     Button.addEventListener('click', function() {
+        //キーの色を変更
+        let oldActiveKey = document.getElementsByClassName('active-key');
+        if (oldActiveKey.length > 0) {
+            oldActiveKey[0].classList.remove('active-key');
+        }
+        keyBorder.classList.add('active-key');
+
+
+        keyIndexes = key.id.replace('key-', '').split(':');
+
+        //キーのプロパティを表示
+        let keyPropertyTabs = document.getElementById('key-labels');
+
+        let oldItems = keyPropertyTabs.children;
+        while (oldItems.length > 0) {
+            keyPropertyTabs.removeChild(oldItems[0]);
+        }
+
+        if(currentKeymap != null){
+            for (let key in currentKeymap['keymap']) {
+                keyInputItem = document.createElement('div');
+                keyInputLabel = document.createElement('p');
+                keyInputInput = document.createElement('input');
+
+                keyPropertyTabs.appendChild(keyInputItem);
+                keyInputItem.appendChild(keyInputLabel);
+                keyInputItem.appendChild(keyInputInput);
+
+                keyInputItem.className = 'key-input-item';
+                
+                keyInputLabel.innerHTML = key;
+                
+                keyInputInput.value = currentKeymap['keymap'][key][keyIndexes[0]][keyIndexes[1]];
+                
+            }
+        }
+
         console.log('click: ' + id);
     });
 
@@ -154,7 +191,7 @@ async function createKeyboard(layout_name) {
                 else if (e.length < 7){
                     e.concat([0, 0, 0]);
                 }
-                createKey(String(i) + String(j), e[0], e[1], e[2], e[3], rotate = e[4], ranchorX = e[5], ranchorY = e[6]);
+                createKey(String(i) + ':' + String(j), e[0], e[1], e[2], e[3], rotate = e[4], ranchorX = e[5], ranchorY = e[6]);
             })
         });
         keyBoard_bg_resize();
@@ -177,7 +214,7 @@ async function createKeymap(keymap_name) {
         keymap_default.forEach((e, i) => {
             e.forEach((f, j) => {
                 //console.log(String(i) + String(j) + f);
-                keyLabel = document.getElementById('label-' + String(i) + String(j));
+                keyLabel = document.getElementById('label-' + String(i) + ':' + String(j));
                 //console.log(keyLabel)
                 keyLabel.innerHTML = String(f);
             })
@@ -252,6 +289,7 @@ function main(){
     keyboardBg.style.width = keyCapWidth + 'px';
     keyboardBg.style.height = keyCapHeight + 'px';
 
+    // ロードキーマップボタンとロードレイアウトボタンのクリック時の動作
     let selectLayoutButton = document.getElementById('select-layout-button');
     let layoutDropdown = document.getElementById('select-layout-list');
     let selectKeymapButton = document.getElementById('select-keymap-button');
@@ -324,7 +362,7 @@ function main(){
     };
 
 
-    // キーボードプロパティのタブボタン
+    // キーボードプロパティのタブボタンの設定
     let defaultTab = 0;
     let keyboardPropertyTabButtons = document.getElementsByClassName('key-property-menu-item');
     //console.log(keyboardPropertyTabButtons);

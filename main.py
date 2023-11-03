@@ -357,7 +357,7 @@ def main():
     layout_name = '3by3'
 
     gui = web.web_gui()
-    gui.load_layout(layout_name)
+    #gui.load_layout(layout_name)
     gui.start('main.html')
 
 
