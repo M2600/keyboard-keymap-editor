@@ -2,7 +2,7 @@
 const keyCapWidth = 54;
 const keyCapHeight = 54;
 
-
+var currentKeymap = null;
 
 eel.expose(keyBoard_bg_resize);
 function keyBoard_bg_resize() {
@@ -165,6 +165,7 @@ async function createKeyboard(layout_name) {
 async function createKeymap(keymap_name) {
     getKeymap(keymap_name).then(async (value) => {
         let keymap = value;
+        currentKeymap = keymap;
         //console.log(keymap)
         if (typeof keymap !== 'object') {
             return;
@@ -322,6 +323,35 @@ function main(){
         })
     };
 
+
+    // キーボードプロパティのタブボタン
+    let defaultTab = 0;
+    let keyboardPropertyTabButtons = document.getElementsByClassName('key-property-menu-item');
+    //console.log(keyboardPropertyTabButtons);
+    for (i=0; i<keyboardPropertyTabButtons.length; i++) {
+        if (i == defaultTab) { 
+            keyboardPropertyTabButtons[i].classList.add('active');
+            document.getElementById(keyboardPropertyTabButtons[i].id + '-body').style.display = 'block';
+        }
+        else {
+            document.getElementById(keyboardPropertyTabButtons[i].id + '-body').style.display = 'none';
+        }
+        keyboardPropertyTabButtons[i].addEventListener('click', function() {
+            let keyboardPropertyTabButtons = document.getElementsByClassName('key-property-menu-item');
+            for (j=0; j<keyboardPropertyTabButtons.length; j++) {
+                keyboardPropertyTabButtons[j].classList.remove('active');
+            }
+            this.classList.add('active');
+            let keyboardPropertyTabs = document.getElementsByClassName('key-property-body-item');
+            for (j=0; j<keyboardPropertyTabs.length; j++) {
+                keyboardPropertyTabs[j].style.display = 'none';
+            }
+            let currentTab = document.getElementById(this.id + '-body');
+            //console.log(currentTab);
+            currentTab.style.display = 'block';
+        });
+    }
+    
 }
 
 main();

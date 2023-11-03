@@ -16,7 +16,7 @@
     <main id="main">
         <div id="keyboard-menu">
             <div id="menu-bar">
-                <div id="select-layout" class="menu-item">
+                <div id="select-layout" class="menu-item" style="display: none;">
                     <button id="select-layout-button"><i class="fa-solid fa-upload fa-sm"></i> Load Layout <i class="fa-solid fa-caret-down fa-xs"></i></button>
                     <ul id="select-layout-list" class="dropdown-menu">
                         <!-- JS inputs something here -->
@@ -48,15 +48,23 @@
         <div id="key-property">
             <div id="key-property-menu">
                 <ul id="key-property-menu-list">
-                    <li id="proerty-tab-button" class="key-property-menu-item active">Key Properties</li>
+                    <li id="property-tab-button" class="key-property-menu-item active">Key Properties</li>
                     <li id="description-tab-button" class="key-property-menu-item">Descriptions</li>
                 </ul>
             </div>
             <div id="key-property-body">
-                <div id="key-labels" class="key-prorety-body-item">
-                    <select id="key-labels-default-select" class="key-labels-select">
-                        <option value="default">Default</option>
-                        <option value="custom">Custom</option>
+                <div id="property-tab-button-body" class="key-property-body-item">
+                    <div id="key-labels" class="key-property-tab-item">
+                        <select id="key-labels-default-select" class="key-labels-select">
+                            <option value="default">Default</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="description-tab-button-body" class="key-property-body-item">
+                    <div id="key-description" class="key-property-tab-item">
+                        <textarea id="key-description-textarea" class="key-description-textarea" placeholder="Key description..."></textarea>
+                    </div>
                 </div>
             </div>
         </div>
