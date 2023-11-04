@@ -77,7 +77,6 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyBorder.style.backgroundColor = '#cccccc';
     keyBorder.style.border = 'solid 1px black';
     keyBorder.style.borderRadius = '5px';
-    keyBorder.style.zIndex = '100';
 
     const keyTop = document.createElement('div');
     keyTop.id = 'top-' + id;
@@ -91,7 +90,6 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyTop.style.borderColor = 'rgba(0, 0, 0, 0.1)';
     keyTop.style.borderWidth = '1px';
     keyTop.style.borderRadius = '3px';
-    keyTop.style.zIndex = '100';
 
 
     const keyLabel = document.createElement('div');
@@ -106,7 +104,6 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyLabel.style.borderColor = 'rgba(0, 0, 0, 0)';
     keyLabel.style.borderWidth = '1px';
     keyLabel.style.borderRadius = '3px';
-    keyLabel.style.zIndex = '900';
     keyLabel.style.fontSize = '12px';
     keyLabel.style.fontFamily = 'sans-serif';
     keyLabel.style.fontWeight = 'bold';
@@ -123,7 +120,6 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     Button.style.borderColor = 'rgba(0, 0, 0, 0)';
     Button.style.borderWidth = '1px';
     Button.style.borderRadius = '3px';
-    Button.style.zIndex = '901';
     Button.addEventListener('mouseover', function() {
         keyBorder.style.borderWidth = '2px';
         keyBorder.style.borderColor = 'lightgreen';
@@ -149,45 +145,56 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
         clearKeyProperty();
 
         if(currentKeymap != null){
-            for (let key in currentKeymap['keymap']) {
-                keyInputItem = document.createElement('div');
-                keyInputLabel = document.createElement('label');
-                keyInputSelect = document.createElement('select');
+            for (let keyLayer in currentKeymap['keymap']) {
+                keyInputBlock = document.createElement('div');
+                keyInputBlock.className = 'key-input-block';
 
-                keyPropertyTabs.appendChild(keyInputItem);
-                keyInputItem.appendChild(keyInputLabel);
-                keyInputItem.appendChild(keyInputSelect);
+                keyBlockLabel = document.createElement('p');
+                keyBlockLabel.className = 'key-input-block-label';
+                keyBlockLabel.innerHTML = keyLayer;
+                keyInputBlock.appendChild(keyBlockLabel);
 
-                keyInputItem.className = 'key-input-item';
-                
-                keyInputLabel.className = 'key-input-label';
-                keyInputLabel.innerHTML = key  + ': ';
-                
-                keyInputSelect.className = 'key-input-select';
-                keyInputSelect.addEventListener('change', function() {
-                    //console.log(this.value);
-                    currentKeymap['keymap'][key][keyIndexes[0]][keyIndexes[1]] = this.value;
-                    reloadLabel();
-                });
-                
-                // option = document.createElement('option');
-                // option.value = '>==select keycode==<';
-                // option.innerHTML = '>==select keycode==<';
-                // keyInputSelect.appendChild(option);
-                for (let keyname in keycodeList['keyList']) {
-                    let option = document.createElement('option');
-                    option.value = keyname;
-                    option.title = keycodeList['keyList'][keyname][2];
-                    option.innerHTML = keyname;
-                    option.className = 'key-input-option';
-                    keyInputSelect.appendChild(option);
+                keyPropertyTabs.appendChild(keyInputBlock);
+                for (let key in currentKeymap['keymap'][keyLayer]) {
+
+                    keyInputItem = document.createElement('div');
+                    keyInputLabel = document.createElement('label');
+                    keyInputSelect = document.createElement('select');
+
+                    keyInputBlock.appendChild(keyInputItem);
+                    keyInputItem.appendChild(keyInputLabel);
+                    keyInputItem.appendChild(keyInputSelect);
+
+                    keyInputItem.className = 'key-input-item';
+                    
+                    keyInputLabel.className = 'key-input-label';
+                    keyInputLabel.innerHTML = key  + ': ';
+                    
+                    keyInputSelect.className = 'key-input-select';
+                    keyInputSelect.addEventListener('change', function() {
+                        //console.log(this.value);
+                        currentKeymap['keymap'][keyLayer][key][keyIndexes[0]][keyIndexes[1]] = this.value;
+                        reloadLabel();
+                    });
+
+                    // option = document.createElement('option');
+                    // option.value = '>==select keycode==<';
+                    // option.innerHTML = '>==select keycode==<';
+                    // keyInputSelect.appendChild(option);
+                    for (let keyname in keycodeList['keyList']) {
+                        let option = document.createElement('option');
+                        option.value = keyname;
+                        option.title = keycodeList['keyList'][keyname][2];
+                        option.innerHTML = keyname;
+                        option.className = 'key-input-option';
+                        keyInputSelect.appendChild(option);
+                    }
+
+
+                    keyInputSelect.value = currentKeymap['keymap'][keyLayer][key][keyIndexes[0]][keyIndexes[1]];
+                    //keyInputSelect.value = 'NONE';
+
                 }
-
-
-                keyInputSelect.value = currentKeymap['keymap'][key][keyIndexes[0]][keyIndexes[1]];
-                //keyInputSelect.value = 'NONE';
-
-                
             }
         }
 
@@ -242,17 +249,23 @@ async function createKeymap(keymap_name) {
         let keymap = value;
         currentKeymap = keymap;
         //console.log(keymap)
-        if (typeof keymap !== 'object') {
+        if (typeof currentKeymap !== 'object') {
             return;
         }
-        await createKeyboard(keymap['layout']);
-        
+        await createKeyboard(currentKeymap['layout']);
+
+        let keymap_name_input = document.getElementById('keymap-name-input');
+        let keymap_description_textarea = document.getElementById('keymap-description-textarea');
+
+        keymap_name_input.value = currentKeymap['name'];
+        keymap_description_textarea.value = currentKeymap['description'];
+
         reloadLabel();
     });
 }
 
 function reloadLabel() {
-    let keymap_default = currentKeymap['keymap']['DEFAULT'];
+    let keymap_default = currentKeymap['keymap']['default']['default'];
     //console.log(keymap_default)
     keymap_default.forEach((e, i) => {
         e.forEach((f, j) => {
@@ -263,6 +276,16 @@ function reloadLabel() {
         })
     });
 }
+
+
+async function saveKeymap() {
+    let keymap = currentKeymap;
+    let keymap_name = currentKeymap['name'];
+    ret = await saveKeymap_py(keymap, keymap_name);
+    return ret;
+}
+
+
 
 
 eel.expose(clearKeyboard)
@@ -326,10 +349,11 @@ async function getKeymap(keymapName) {
     return keymap;
 }
 
-async function saveKeymap(keymap, kaymapName) {
+async function saveKeymap_py(keymap, kaymapName) {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
     let ret = await eel.save_keymap('_', keymap, kaymapName)();
     console.log(ret);
+    return ret;
 }
 
 function main(){
@@ -417,6 +441,25 @@ function main(){
     };
 
 
+    // キーマップの保存ボタンの設定
+    saveKeymapButton = document.getElementById('save-keymap-button');
+    saveKeymapButton.addEventListener('click', async function() {
+        if (currentKeymap === null) {
+            alert('No keymap is loaded.');
+            return;
+        }
+        ret = await saveKeymap();
+        if (ret === 0) {
+            alert('Success to save keymap: ' + currentKeymap['name']);
+        }
+        else {
+            alert('Failed to save keymap.');
+        }
+    });
+
+
+
+
     // キーボードプロパティのタブボタンの設定
     let defaultTab = 0;
     let keyboardPropertyTabButtons = document.getElementsByClassName('key-property-menu-item');
@@ -444,6 +487,18 @@ function main(){
             currentTab.style.display = 'block';
         });
     }
+
+    //キーマッププロパティの入力欄の設定
+    let keymap_name_input = document.getElementById('keymap-name-input');
+    let keymap_description_textarea = document.getElementById('keymap-description-textarea');
+
+    keymap_name_input.addEventListener('change', function() {
+        currentKeymap['name'] = this.value;
+    });
+    keymap_description_textarea.addEventListener('change', function() {
+        currentKeymap['description'] = this.value;
+    });
+
     
 }
 

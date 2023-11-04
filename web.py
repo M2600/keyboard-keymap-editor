@@ -79,10 +79,12 @@ class web_gui:
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
     def save_keymap(self, key_map, keymap_name):
-        layout_name = key_map['keymap']
+        layout_name = key_map['layout']
         with open(keymap_dir + keymap_name + '.keymap', 'w') as f:
-            json.dump(key_map, f, ensure_ascii=False, indent=4, sort_keys=True, separators=(',', ': '))
+            json.dump(key_map, f, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
         print('save ' + layout_name + ', ' + keymap_name)
+        return 0
+
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
@@ -163,7 +165,7 @@ class web_gui:
         eel.createKeyboard_py(layout_name)
 
     def start(self, html_file):
-        eel.start(html_file, size=(800, 600), block=False)
+        eel.start(html_file, size=(800, 800), block=False)
         while True:
             eel.sleep(1)
 

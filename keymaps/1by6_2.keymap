@@ -1,17 +1,15 @@
 {
-    "name": "1by6",
-    "description": "1by6 keymap",
-    "layout": "1by6",
+    "description": "1by6 keymap. for test so its meaningless.",
     "keymap": {
         "default": {
             "default": [
                 [
-                    "1",
                     "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6"
+                    "9",
+                    "LOWER",
+                    "RAISE",
+                    "INSERT",
+                    "MAIL"
                 ]
             ],
             "fn": [
@@ -24,7 +22,7 @@
                     "6"
                 ]
             ],
-            "raise": [
+            "lower": [
                 [
                     "1",
                     "2",
@@ -34,7 +32,7 @@
                     "6"
                 ]
             ],
-            "lower": [
+            "raise": [
                 [
                     "1",
                     "2",
@@ -66,7 +64,7 @@
                     "6"
                 ]
             ],
-            "raise": [
+            "lower": [
                 [
                     "1",
                     "2",
@@ -76,7 +74,7 @@
                     "6"
                 ]
             ],
-            "lower": [
+            "raise": [
                 [
                     "1",
                     "2",
@@ -87,5 +85,7 @@
                 ]
             ]
         }
-    }
+    },
+    "layout": "1by6",
+    "name": "1by6_2"
 }

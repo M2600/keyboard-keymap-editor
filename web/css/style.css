@@ -169,8 +169,40 @@ body {
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     padding: 5px;
+    font-family: sans-serif;
 }
 
+.key-property-tab-item {
+    padding: 5px;
+}
+
+.key-input-block {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.key-input-block-label {
+    margin: 0;
+}
+
+.keymap-name-input {
+    width: 50%;
+}
+
+.keymap-property-label {
+    display:inline-block;
+    width: 10rem;
+    text-align: right;
+    vertical-align: top;
+}
+
+
+.keymap-description-textarea {
+    width: 50%;
+    height: 120px;
+}
 
 .key-input-item {
     margin-top: 5px;
@@ -185,6 +217,7 @@ body {
     margin-top: 0;
     margin-bottom: 0;
     font-family: sans-serif;
+    font-size: 14px;
 }
 
 .key-input-select {

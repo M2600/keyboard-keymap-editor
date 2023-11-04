@@ -6,7 +6,8 @@ import web
 keyList = {
     'profileKeys': ['FN', 'RAISE', 'LOWER'],
     'keyList':{
-        'NONE': ['NONE', 'NONE', ''],
+        'NONE': ['', 'NONE', ''],
+        '____': ['', '____', ''], # 空白キー
         'FN': ['FN', 'KEY_FN',''],
         'CHANGE_PROFILE': ['CHPRFL', 'KEY_CPFL', 'Change profile.'], # Change Profile
         'CHANGE_COLOR': ['CHCPRFL', 'KEY_CLPF', 'Change LED color.'],  # Change LED Color

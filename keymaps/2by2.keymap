@@ -1,85 +1,91 @@
 {
+    "name": "2by2",
+    "description": "2by2 keymap",
     "layout": "2by2",
     "keymap": {
-        "DEFAULT": [
-            [
-                "1",
-                "2"
+        "default": {
+            "default": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ],
-            [
-                "3",
-                "4"
-            ]
-        ],
-        "FN": [
-            [
-                "fn_1",
-                "fn_2"
+            "fn": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ],
-            [
-                "fn_3",
-                "fn_4"
-            ]
-        ],
-        "RAISE": [
-            [
-                "raise_1",
-                "raise_2"
+            "raise": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ],
-            [
-                "raise_3",
-                "raise_4"
+            "lower": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ]
-        ],
-        "LOWER": [
-            [
-                "lower_1",
-                "lower_2"
+        },
+        "game": {
+            "default": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ],
-            [
-                "lower_3",
-                "lower_4"
-            ]
-        ],
-        "GAME": [
-            [
-                "game_1",
-                "game_2"
+            "fn": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ],
-            [
-                "game_3",
-                "game_4"
-            ]
-        ],
-        "GAME_FN": [
-            [
-                "game_fn_1",
-                "game_fn_2"
+            "raise": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ],
-            [
-                "game_fn_3",
-                "game_fn_4"
+            "lower": [
+                [
+                    "1",
+                    "2"
+                ],
+                [
+                    "3",
+                    "4"
+                ]
             ]
-        ],
-        "GAME_RAISE": [
-            [
-                "game_raise_1",
-                "game_raise_2"
-            ],
-            [
-                "game_raise_3",
-                "game_raise_4"
-            ]
-        ],
-        "GAME_LOWER": [
-            [
-                "game_lower_1",
-                "game_lower_2"
-            ],
-            [
-                "game_lower_3",
-                "game_lower_4"
-            ]
-        ]
+        }
     }
 }
