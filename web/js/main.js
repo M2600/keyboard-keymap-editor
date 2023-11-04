@@ -3,6 +3,7 @@ const keyCapWidth = 54;
 const keyCapHeight = 54;
 
 var currentKeymap = null;
+var keycodeList = null;
 
 eel.expose(keyBoard_bg_resize);
 function keyBoard_bg_resize() {
@@ -76,6 +77,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyBorder.style.backgroundColor = '#cccccc';
     keyBorder.style.border = 'solid 1px black';
     keyBorder.style.borderRadius = '5px';
+    keyBorder.style.zIndex = '100';
 
     const keyTop = document.createElement('div');
     keyTop.id = 'top-' + id;
@@ -89,6 +91,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyTop.style.borderColor = 'rgba(0, 0, 0, 0.1)';
     keyTop.style.borderWidth = '1px';
     keyTop.style.borderRadius = '3px';
+    keyTop.style.zIndex = '100';
 
 
     const keyLabel = document.createElement('div');
@@ -103,6 +106,10 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyLabel.style.borderColor = 'rgba(0, 0, 0, 0)';
     keyLabel.style.borderWidth = '1px';
     keyLabel.style.borderRadius = '3px';
+    keyLabel.style.zIndex = '900';
+    keyLabel.style.fontSize = '12px';
+    keyLabel.style.fontFamily = 'sans-serif';
+    keyLabel.style.fontWeight = 'bold';
 
     const Button = document.createElement('div');
     Button.id = 'button-' + id;
@@ -116,6 +123,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     Button.style.borderColor = 'rgba(0, 0, 0, 0)';
     Button.style.borderWidth = '1px';
     Button.style.borderRadius = '3px';
+    Button.style.zIndex = '901';
     Button.addEventListener('mouseover', function() {
         keyBorder.style.borderWidth = '2px';
         keyBorder.style.borderColor = 'lightgreen';
@@ -138,26 +146,47 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
         //キーのプロパティを表示
         let keyPropertyTabs = document.getElementById('key-labels');
 
-        let oldItems = keyPropertyTabs.children;
-        while (oldItems.length > 0) {
-            keyPropertyTabs.removeChild(oldItems[0]);
-        }
+        clearKeyProperty();
 
         if(currentKeymap != null){
             for (let key in currentKeymap['keymap']) {
                 keyInputItem = document.createElement('div');
-                keyInputLabel = document.createElement('p');
-                keyInputInput = document.createElement('input');
+                keyInputLabel = document.createElement('label');
+                keyInputSelect = document.createElement('select');
 
                 keyPropertyTabs.appendChild(keyInputItem);
                 keyInputItem.appendChild(keyInputLabel);
-                keyInputItem.appendChild(keyInputInput);
+                keyInputItem.appendChild(keyInputSelect);
 
                 keyInputItem.className = 'key-input-item';
                 
-                keyInputLabel.innerHTML = key;
+                keyInputLabel.className = 'key-input-label';
+                keyInputLabel.innerHTML = key  + ': ';
                 
-                keyInputInput.value = currentKeymap['keymap'][key][keyIndexes[0]][keyIndexes[1]];
+                keyInputSelect.className = 'key-input-select';
+                keyInputSelect.addEventListener('change', function() {
+                    //console.log(this.value);
+                    currentKeymap['keymap'][key][keyIndexes[0]][keyIndexes[1]] = this.value;
+                    reloadLabel();
+                });
+                
+                // option = document.createElement('option');
+                // option.value = '>==select keycode==<';
+                // option.innerHTML = '>==select keycode==<';
+                // keyInputSelect.appendChild(option);
+                for (let keyname in keycodeList['keyList']) {
+                    let option = document.createElement('option');
+                    option.value = keyname;
+                    option.title = keycodeList['keyList'][keyname][2];
+                    option.innerHTML = keyname;
+                    option.className = 'key-input-option';
+                    keyInputSelect.appendChild(option);
+                }
+
+
+                keyInputSelect.value = currentKeymap['keymap'][key][keyIndexes[0]][keyIndexes[1]];
+                //keyInputSelect.value = 'NONE';
+
                 
             }
         }
@@ -178,6 +207,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
 //eel.expose(createKeyboard);
 async function createKeyboard(layout_name) {
     clearKeyboard();
+    clearKeyProperty();
     await getLayout(layout_name).then(async (value) => {
         let layout = value;
         if (typeof layout !== 'object') {
@@ -198,6 +228,14 @@ async function createKeyboard(layout_name) {
     });
 }
 
+function clearKeyProperty() {
+    keyPropertyTabs = document.getElementById('key-labels');
+    let oldItems = keyPropertyTabs.children;
+    while (oldItems.length > 0) {
+        keyPropertyTabs.removeChild(oldItems[0]);
+    }
+}
+
 //eel.expose(createKeymap);
 async function createKeymap(keymap_name) {
     getKeymap(keymap_name).then(async (value) => {
@@ -209,16 +247,20 @@ async function createKeymap(keymap_name) {
         }
         await createKeyboard(keymap['layout']);
         
-        let keymap_default = keymap['keymap']['default'];
-        //console.log(keymap_default)
-        keymap_default.forEach((e, i) => {
-            e.forEach((f, j) => {
-                //console.log(String(i) + String(j) + f);
-                keyLabel = document.getElementById('label-' + String(i) + ':' + String(j));
-                //console.log(keyLabel)
-                keyLabel.innerHTML = String(f);
-            })
-        });
+        reloadLabel();
+    });
+}
+
+function reloadLabel() {
+    let keymap_default = currentKeymap['keymap']['DEFAULT'];
+    //console.log(keymap_default)
+    keymap_default.forEach((e, i) => {
+        e.forEach((f, j) => {
+            //console.log(String(i) + String(j) + f);
+            keyLabel = document.getElementById('label-' + String(i) + ':' + String(j));
+            //console.log(keyLabel)
+            keyLabel.innerHTML = keycodeList['keyList'][String(f)][0];
+        })
     });
 }
 
@@ -249,9 +291,16 @@ async function pythonPrint() {
     console.log(ret);
 }
 
+async function getKeycodes() {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let keycodeList = await eel.get_keycode_list('_')();
+    //console.log(keycodeList);
+    return keycodeList;
+}
+
 async function getlayouts() {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
-    let layoutList = await eel.get_layout_list('_')()
+    let layoutList = await eel.get_layout_list('_')();
     //console.log(layoutList);
     return layoutList;
 }
@@ -288,6 +337,12 @@ function main(){
     let keyboardBg = document.getElementById('keyboard-bg');
     keyboardBg.style.width = keyCapWidth + 'px';
     keyboardBg.style.height = keyCapHeight + 'px';
+
+    // キーコードリストを取得
+    getKeycodes().then((value) => {
+        keycodeList = value;
+        //console.log(keycodeList);
+    });
 
     // ロードキーマップボタンとロードレイアウトボタンのクリック時の動作
     let selectLayoutButton = document.getElementById('select-layout-button');

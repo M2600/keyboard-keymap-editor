@@ -60,6 +60,7 @@ def keyboard_1():
 
 layout_dir = 'layouts/'
 keymap_dir = 'keymaps/'
+keycode_list_path = 'keycodeList.json'
 
 class web_gui:
     def __init__(self):
@@ -87,6 +88,23 @@ class web_gui:
     @eel.expose
     def write(self, layout_name, keymap_name):
         print('write: ' + layout_name + ', ' + keymap_name)
+
+
+
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def get_keycode_list(self):
+        try:
+            with open(keycode_list_path, 'r') as f:
+                keycode_list = json.load(f)
+        except FileNotFoundError as e:
+            print(e)
+            return 'error: keycode list file "' + keycode_list_path + '" not found.'
+        print('get_keycode_list: ', end='')
+        print(keycode_list)
+        return keycode_list
+
 
     ### One argument are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###

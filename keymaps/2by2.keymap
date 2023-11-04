@@ -1,6 +1,7 @@
 {
+    "layout": "2by2",
     "keymap": {
-        "default": [
+        "DEFAULT": [
             [
                 "1",
                 "2"
@@ -10,7 +11,7 @@
                 "4"
             ]
         ],
-        "fn": [
+        "FN": [
             [
                 "fn_1",
                 "fn_2"
@@ -20,47 +21,17 @@
                 "fn_4"
             ]
         ],
-        "game": [
+        "RAISE": [
             [
-                "game_1",
-                "game_2"
+                "raise_1",
+                "raise_2"
             ],
             [
-                "game_3",
-                "game_4"
+                "raise_3",
+                "raise_4"
             ]
         ],
-        "game_fn": [
-            [
-                "game_fn_1",
-                "game_fn_2"
-            ],
-            [
-                "game_fn_3",
-                "game_fn_4"
-            ]
-        ],
-        "game_lower": [
-            [
-                "game_lower_1",
-                "game_lower_2"
-            ],
-            [
-                "game_lower_3",
-                "game_lower_4"
-            ]
-        ],
-        "game_raise": [
-            [
-                "game_raise_1",
-                "game_raise_2"
-            ],
-            [
-                "game_raise_3",
-                "game_raise_4"
-            ]
-        ],
-        "lower": [
+        "LOWER": [
             [
                 "lower_1",
                 "lower_2"
@@ -70,16 +41,45 @@
                 "lower_4"
             ]
         ],
-        "raise": [
+        "GAME": [
             [
-                "raise_1",
-                "raise_2"
+                "game_1",
+                "game_2"
             ],
             [
-                "raise_3",
-                "raise_4"
+                "game_3",
+                "game_4"
+            ]
+        ],
+        "GAME_FN": [
+            [
+                "game_fn_1",
+                "game_fn_2"
+            ],
+            [
+                "game_fn_3",
+                "game_fn_4"
+            ]
+        ],
+        "GAME_RAISE": [
+            [
+                "game_raise_1",
+                "game_raise_2"
+            ],
+            [
+                "game_raise_3",
+                "game_raise_4"
+            ]
+        ],
+        "GAME_LOWER": [
+            [
+                "game_lower_1",
+                "game_lower_2"
+            ],
+            [
+                "game_lower_3",
+                "game_lower_4"
             ]
         ]
-    },
-    "layout": "2by2"
+    }
 }
