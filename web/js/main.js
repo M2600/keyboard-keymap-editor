@@ -198,7 +198,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
             }
         }
 
-        console.log('click: ' + id);
+        //console.log('click: ' + id);
     });
 
 
