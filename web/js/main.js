@@ -190,8 +190,12 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
                         keyInputSelect.appendChild(option);
                     }
 
-
-                    keyInputSelect.value = currentKeymap['keymap'][keyLayer][key][keyIndexes[0]][keyIndexes[1]];
+                    try {
+                        keyInputSelect.value = currentKeymap['keymap'][keyLayer][key][keyIndexes[0]][keyIndexes[1]];
+                    }
+                    catch {
+                        console.log('error: key ' + keyIndexes[0] + ',' + keyIndexes[1] + ' is not found.');
+                    }
                     //keyInputSelect.value = 'NONE';
 
                 }
@@ -223,7 +227,7 @@ async function createKeyboard(layout_name) {
         layout.forEach((e, i) => {
             e.forEach((e, j) => {
                 if (e.length < 4) {
-                    console.log('warning: key ' + i + ',' + j + ' is not enough length. Skip this key.');
+                    //console.log('warning: key ' + i + ',' + j + ' is not enough length. Skip this key.');
                 }
                 else if (e.length < 7){
                     e.concat([0, 0, 0]);
@@ -272,7 +276,12 @@ function reloadLabel() {
             //console.log(String(i) + String(j) + f);
             keyLabel = document.getElementById('label-' + String(i) + ':' + String(j));
             //console.log(keyLabel)
-            keyLabel.innerHTML = keycodeList['keyList'][String(f)][0];
+            try {
+                keyLabel.innerHTML = keycodeList['keyList'][String(f)][0];
+            }
+            catch {
+                console.log('error: keyname ' + f + ' is not found.');
+            }
         })
     });
 }

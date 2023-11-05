@@ -1,14 +1,29 @@
 
+import json
 
 class keymap_generator:
 
-    def __init__(self, keymapTemplate_dir  = 'keymapTemplate'):
+    def __init__(self, keymapTemplate_dir  = 'keymap_template'):
         self.keymapTemplata_dir = keymapTemplate_dir
         self.keymapRow = 7 * 16  # 7 rows each 16 profiles
         self.keymapCol = 8       # 8 columns
         # Read keymap template
         with open(self.keymapTemplata_dir, 'r') as f:
             self.keymapTemplate = f.read()
+
+
+    def convert_keymapFile_to_keymap(self, keymapFile_path):
+        keymap = []
+        with open(keymapFile_path, 'r') as f:
+            keymapData = json.load(f)
+        mappingRule = keymapData['mappingRule']
+        for rule in mappingRule:
+            self.ret = keymapData
+            for i in rule:
+                self.ret = self.ret[i]
+            keymap.append(self.ret)
+        return keymap
+
 
     def generate_keymap_file(self, keymap, output_dir):
         self.keymapFile_dir = output_dir
