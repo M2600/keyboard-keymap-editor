@@ -66,6 +66,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
     keyCap.id = 'cap-' + id;
     keyCap.className = 'key-cap';
     keyCap.style.transform = 'rotate(' + rotate + 'deg)';
+    keyCap.style.transformOrigin = keyCapWidth * ranchorX + 'px ' + keyCapHeight * ranchorY + 'px';
     
     const keyBorder = document.createElement('div');
     keyBorder.id = 'border-' + id;
