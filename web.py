@@ -1,5 +1,6 @@
 
 import eel
+import webbrowser
 import os, json
 
 
@@ -49,8 +50,8 @@ class web_gui:
         except FileNotFoundError as e:
             print(e)
             return 'error: keycode list file "' + keycode_list_path + '" not found.'
-        print('get_keycode_list: ', end='')
-        print(keycode_list)
+        print('get_keycode_list: ')
+        #print(keycode_list)
         return keycode_list
 
 
@@ -104,6 +105,12 @@ class web_gui:
             print(e)
             return 'error: keymap file "' + keymap_path + '" not found.'
         return keymap
+    
+    ### One argument are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def open_link_in_default_browser(self, url):
+        webbrowser.open(url)
 
 
     def load_layout(self, layout_name):

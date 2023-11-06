@@ -366,6 +366,12 @@ async function saveKeymap_py(keymap, kaymapName) {
     return ret;
 }
 
+async function openLinkInDefaultBrowser(url) {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let ret = await eel.open_link_in_default_browser('_', url)();
+}
+
+
 function main(){
     //初期のキーボードの大きさを設定
     let keyboardBg = document.getElementById('keyboard-bg');
@@ -509,7 +515,17 @@ function main(){
         currentKeymap['description'] = this.value;
     });
 
-    
+    //リンクの設定 aタグをそのままクリックするとeelのウィンドウやeelで使用しているブラウザで開いてしまうので、
+    //　python経由でデフォルトブラウザで開くようにする。（どうしてもデフォルトブラウザで開くようにしたい）
+    let aElems = document.getElementsByTagName('a');
+    for (let i = 0; i < aElems.length; i++) {
+        link = aElems[i].href;
+        aElems[i].addEventListener('click', () => {
+            openLinkInDefaultBrowser(link);
+            //console.log(aElems[i].href)
+        });
+        aElems[i].href = 'javascript:void(0)';
+    }
 }
 
 main();
