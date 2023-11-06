@@ -31,9 +31,36 @@
 
                 <div id="write-keymap" class="menu-item">
                     <button id="write-keymap-button"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #ffffff;"></i> Write Keymap</button>
+                    <div id="write-window-bg" class="popup-window-bg"  style="display: none">
+                        <div id="write-window" class="popup-window">
+                            <div id="write-window-header" class="popup-window-header">
+                                <h3 id="write-window-title" class="popup-window-title">Write Keymap</h3>
+                                <button id="write-window-close-button" class="popup-window-close-button"><i class="fa-solid fa-times fa-xs"></i></button>
+                            </div>
+                            <div id="write-window-body" class="popup-window-body">
+                                <div id="write-window-body-left" class="popup-window-body-left">
+                                    <div id="write-window-body-left-keymap" class="popup-window-body-left-item">
+                                        <label class="popup-window-body-left-item-label">Keymap:</label>
+                                        <input id="write-window-body-left-keymap-input" class="popup-window-body-left-item-input" type="text" placeholder="Keymap name...">
+                                    </div>
+                                    <div id="write-window-body-left-layout" class="popup-window-body-left-item">
+                                        <label class="popup-window-body-left-item-label">Layout:</label>
+                                        <input id="write-window-body-left-layout-input" class="popup-window-body-left-item-input" type="text" placeholder="Layout name...">
+                                    </div>
+                                    <div id="write-window-body-left-destination" class="popup-window-body-left-item">
+                                        <label class="popup-window-body-left-item-label">Destination:</label>
+                                        <input id="write-window-body-left-destination-input" class="popup-window-body-left-item-input" type="text" placeholder="Destination...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div id="save-keymap" class="menu-item">
                     <button id="save-keymap-button"><i class="fa-solid fa-floppy-disk fa-sm" style="color: #ffffff;"></i> Save Keymap</button>
+                    <div id="save-dialog" class="dialog" style="display: none;">
+                        <p id="save-dialog-message" class="dialog-message">Saved!</p>
+                    </div>
                 </div>
                 
             </div>

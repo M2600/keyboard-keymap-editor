@@ -5,6 +5,9 @@ const keyCapHeight = 54;
 var currentKeymap = null;
 var keycodeList = null;
 
+
+var saveSetTimeoutId = null;
+
 eel.expose(keyBoard_bg_resize);
 function keyBoard_bg_resize() {
     let maxKeyPosX = 0;
@@ -372,6 +375,12 @@ async function openLinkInDefaultBrowser(url) {
 }
 
 
+function closeWriteWindow() {
+    writeWindow = document.getElementById('write-window-bg');
+    writeWindow.style.display = 'none';
+}
+
+
 function main(){
     //初期のキーボードの大きさを設定
     let keyboardBg = document.getElementById('keyboard-bg');
@@ -460,17 +469,63 @@ function main(){
     // キーマップの保存ボタンの設定
     saveKeymapButton = document.getElementById('save-keymap-button');
     saveKeymapButton.addEventListener('click', async function() {
+        let saveDialog = document.getElementById('save-dialog');
+        let saveDialogMessage = document.getElementById('save-dialog-message');
         if (currentKeymap === null) {
-            alert('No keymap is loaded.');
+            if (saveSetTimeoutId !== null) {
+                clearTimeout(saveSetTimeoutId);
+            }
+            saveDialogMessage.innerHTML = 'No keymap is loaded.'
+            saveDialog.style.color = 'red';
+            saveDialog.style.display = 'block';
+            saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
+            saveSetTimeoutId = setTimeout(() => {
+                saveDialog.style.display = 'none';
+                saveSetTimeoutId = null;    
+            }, 3000)
             return;
         }
         ret = await saveKeymap();
         if (ret === 0) {
-            alert('Success to save keymap: ' + currentKeymap['name']);
+            if (saveSetTimeoutId !== null) {
+                clearTimeout(saveSetTimeoutId);
+            }
+            saveDialogMessage.innerHTML = 'Saved keymap saccessfully as ' + currentKeymap['name'] + '.'
+            saveDialog.style.color = '#4cae4c';
+            saveDialog.style.display = 'block';
+            saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
+            saveSetTimeoutId = setTimeout(() => {
+                saveDialog.style.display = 'none';
+                saveSetTimeoutId = null;
+            }, 3000)
         }
         else {
-            alert('Failed to save keymap.');
+            if (saveSetTimeoutId !== null) {
+                clearTimeout(saveSetTimeoutId);
+            }
+            saveDialogMessage.innerHTML = 'Failed to save keymap ' + currentKeymap['name'] + '.'
+            saveDialog.style.color = 'red';
+            saveDialog.style.display = 'block';
+            saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
+            saveSetTimeoutId = setTimeout(() => {
+                saveDialog.style.display = 'none';
+                saveSetTimeoutId = null;
+        }, 3000)
         }
+    });
+
+
+    //キーマップ書き込みボタンの設定
+    let writeKeymapButton = document.getElementById('write-keymap-button');
+    writeKeymapButton.addEventListener('click', async function() {
+        let writeWindow = document.getElementById('write-window-bg');
+        writeWindow.style.display = 'block';
+    });
+
+    //キーマップ書き込みウィンドウの設定
+    let writeWindowCloseButton = document.getElementById('write-window-close-button');
+    writeWindowCloseButton.addEventListener('click', function() {
+        closeWriteWindow();
     });
 
 

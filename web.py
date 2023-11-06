@@ -120,7 +120,7 @@ class web_gui:
     def start(self, html_file):
         eel.start(html_file, size=(800, 800), block=False)
         while True:
-            eel.sleep(1)
+            eel.sleep(1000000)
 
     def createKey(self, x, y, w, h, rotate=0, ranchorX=0, ranchorY=0):
         eel.createKey(x, y, w, h, rotate, ranchorX, ranchorY)
