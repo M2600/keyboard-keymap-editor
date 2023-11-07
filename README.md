@@ -8,6 +8,7 @@ Graphical keyboard layout editor for [numeric-keypad](https://github.com/m2600/n
 ### pip packages
 
 - pyduinocli
+- Eel
 
 ## Requirements (Linux)
 Linux based systems need to install following packages.
@@ -18,6 +19,7 @@ Linux based systems need to install following packages.
 ### pip packages
 
 - pyduinocli
+- Eel
 
 
 
