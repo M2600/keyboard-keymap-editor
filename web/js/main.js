@@ -8,6 +8,7 @@ var keycodeList = null;
 
 var saveSetTimeoutId = null;
 
+
 eel.expose(keyBoard_bg_resize);
 function keyBoard_bg_resize() {
     let maxKeyPosX = 0;
@@ -290,12 +291,108 @@ function reloadLabel() {
     });
 }
 
+function createLoadingBlock() {
+    let loadingBlock = document.createElement('div');
+    loadingBlock.className = 'loading-block';
+    let loadingIcon = document.createElement('i');
+    loadingIcon.className = 'fas fa-spinner fa-spin';
+    loadingBlock.appendChild(loadingIcon);
+    return loadingBlock;
+}
+
 
 async function saveKeymap() {
     let keymap = currentKeymap;
     let keymap_name = currentKeymap['name'];
     ret = await saveKeymap_py(keymap, keymap_name);
     return ret;
+}
+
+function checkWriteConfig(writeConfig) {
+    for (let key in writeConfig) {
+        if (writeConfig[key] === null) {
+            return false;
+        }
+    }
+    return true;
+}
+
+async function showArduinos() {
+    let writeConfig = {
+        'keymap': null,
+        'board': null
+    };
+
+    let arduinoListDiv = document.getElementById('write-window-body-select-board-body');
+    let writeButton = document.getElementById('write-window-footer-write-button');
+
+    if (!checkWriteConfig(writeConfig)) {
+        writeButton.disabled = true;
+    }
+
+    let oldOptions = arduinoListDiv.getElementsByClassName('write-window-body-select-keymap-body-item');
+    while (oldOptions.length > 0) {
+        arduinoListDiv.removeChild(oldOptions[0]);
+    }
+
+    let loadingBlock = createLoadingBlock();
+    arduinoListDiv.appendChild(loadingBlock);
+
+    let arduinoList = await getArduinoList();
+    //console.log(arduinoList);
+    loadingBlock.remove();
+
+    for (let i = 0; i < arduinoList['result'].length; i++) {
+        try {
+            boardName = arduinoList['result'][i]['matching_boards'][0]['name'];
+        }
+        catch {
+            boardName = 'unknown';
+        }
+        try {
+            boardPort = arduinoList['result'][i]['port']['address'];
+        }
+        catch {
+            boardPort = 'unknown';
+        }
+
+
+        let optionElem = document.createElement('div');
+        let boardNameElem = document.createElement('div');
+        let boardPortElem = document.createElement('div');
+        let boardSelectElem = document.createElement('div');
+        let boardSelectButton = document.createElement('button');
+        optionElem.className = 'write-window-body-select-keymap-body-item';
+        boardNameElem.className = 'write-window-body-select-keymap-body-item-board-name';
+        boardPortElem.className = 'write-window-body-select-keymap-body-item-board-port';
+        boardSelectElem.className = 'write-window-body-select-keymap-body-item-board-select';
+        boardSelectButton.className = 'write-window-body-select-keymap-body-item-board-button';
+
+        boardNameElem.innerHTML = boardName;
+        boardPortElem.innerHTML = boardPort;
+        boardSelectButton.innerHTML = 'Select';
+        boardSelectButton.addEventListener('click', async function() {
+
+            let selectButtons = arduinoListDiv.getElementsByTagName('button');
+            for (let i = 0; i < selectButtons.length; i++) {
+                selectButtons[i].innerHTML = 'Select';
+                selectButtons[i].disabled = false;
+            }
+            boardSelectButton.innerHTML = 'Selected';
+            boardSelectButton.disabled = true;
+
+            writeConfig['board'] = arduinoList['result'][i];
+            checkWriteConfig(writeConfig);
+        });
+        
+
+        optionElem.appendChild(boardNameElem);
+        optionElem.appendChild(boardPortElem);
+        boardSelectElem.appendChild(boardSelectButton);
+        optionElem.appendChild(boardSelectElem);
+        arduinoListDiv.appendChild(optionElem);
+    }
+    
 }
 
 
@@ -360,6 +457,13 @@ async function getKeymap(keymapName) {
     let keymap = await eel.get_keymap('_', keymapName)();
     //console.log(keymap);
     return keymap;
+}
+
+async function getArduinoList() {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let arduinoList = await eel.get_arduino_list('_')();
+    //console.log(arduinoList);
+    return arduinoList;
 }
 
 async function saveKeymap_py(keymap, kaymapName) {
@@ -497,7 +601,7 @@ function main(){
         }
         ret = await saveKeymap();
         if (ret === 0) {
-            showSaveDialog('Saved keymap ' + currentKeymap['name'] + '.', '#4cae4c');
+            showSaveDialog('Saved keymap ' + currentKeymap['name'] + '.', '#5cb85c');
         }
         else {
             showSaveDialog('Failed to save keymap ' + currentKeymap['name'] + '.', '#d9534f');
@@ -510,7 +614,9 @@ function main(){
     writeKeymapButton.addEventListener('click', async function() {
         let writeWindow = document.getElementById('write-window-bg');
         writeWindow.style.display = 'block';
+        showArduinos();
     });
+    
 
     //キーマップ書き込みウィンドウの設定
     let writeWindowCloseButton = document.getElementById('write-window-close-button');

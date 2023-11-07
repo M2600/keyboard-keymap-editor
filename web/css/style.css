@@ -50,7 +50,7 @@ main {
 
 
 
-#keyboard-menu button {
+.menu-button {
     padding: 6px 12px;
     line-height: 1.42;
     font-family: sans-serif;
@@ -76,7 +76,6 @@ main {
 
 #keyboard-menu #save-keymap, #write-keymap {
     float: right;
-    text-align: center;
 }
 
 #keyboard-menu #save-keymap-button, #write-keymap-button {
@@ -95,7 +94,7 @@ main {
 .dialog {
     position: absolute;
     z-index: 1000;
-    background-color: #4cae4c;
+    background-color: #5cb85c;
     border: none;
     border-radius: 4px;
     padding: 1px;
@@ -110,7 +109,7 @@ main {
     margin-left: -15px;
     border: 12px solid transparent;
     border-bottom: 12px solid;
-    border-bottom-color: #4cae4c;
+    border-bottom-color: #5cb85c;
     z-index: 2;
 }
 
@@ -155,7 +154,9 @@ main {
     font-family: sans-serif;
     font-size: 20px;
     font-weight: bold;
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+
 }
 
 .popup-window-close-button {
@@ -171,6 +172,8 @@ main {
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
+    width: 22px;
+    height: 20px;
 }
 
 .popup-window-body {
@@ -178,6 +181,121 @@ main {
 
 }
 
+.popup-window-body-block-title {
+    font-family: sans-serif;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.popup-window-body-block-body {
+    padding: 5px;
+}
+
+.write-window-body-select-keymap-body-item {
+    display: block;
+    margin: 2px 5px 2px;
+    padding: 5px;
+    border-bottom: 1px solid #ddd; 
+    font-family: sans-serif;
+    font-size: 0;
+}
+
+.popup-window-body-block-body-guide {
+    display: block;
+    margin: 2px 5px 2px;
+    padding: 5px;
+    border-bottom: 2px solid #ddd;
+    font-family: sans-serif;
+    font-size: 0;
+}
+
+.write-window-body-select-keymap-body-item-board-port {
+
+}
+
+.write-window-body-select-keymap-body-item-board-select {
+    text-align: right;
+}
+
+.popup-window-body-block-body-guide-item{
+    font-size: 14px;
+    display:inline-block;
+    width: 33%;
+}
+
+
+.popup-window-body-block-body-guide-item p {
+    margin: 5px 0 5px;
+    padding: 0;
+    font-weight: bold;
+}
+
+.write-window-body-select-keymap-body-item div{
+    display: inline-block;
+    width: 33%;
+    font-size: 14px;
+}
+
+
+.write-window-body-select-keymap-body-item button {
+    margin: 0 2px 0; 
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #5cb85c;
+    font-family: sans-serif;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.write-window-body-select-keymap-body-item button:hover {
+    background-color: #449d44;
+}
+
+.write-window-body-select-keymap-body-item button:disabled {
+    background-color: #2b89f5;
+    cursor: not-allowed;
+}
+
+
+.popup-window-footer {
+    margin-top: 5px;
+    text-align: right;
+}
+
+.popup-window-footer button {
+    margin: 0 2px 0; 
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #5cb85c;
+    font-family: sans-serif;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+
+}
+
+.popup-window-footer button:hover {
+    background-color: #449d44;
+}
+
+.popup-window-footer button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+
+
+
+
+
+.loading-block {
+    text-align: center;
+    margin: 10px;
+}
 
 
 

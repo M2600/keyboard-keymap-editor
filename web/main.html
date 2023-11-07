@@ -17,20 +17,20 @@
         <div id="keyboard-menu">
             <div id="menu-bar">
                 <div id="select-layout" class="menu-item" style="display: none;">
-                    <button id="select-layout-button"><i class="fa-solid fa-upload fa-sm"></i> Load Layout <i class="fa-solid fa-caret-down fa-xs"></i></button>
+                    <button id="select-layout-button" class="menu-button"><i class="fa-solid fa-upload fa-sm"></i> Load Layout <i class="fa-solid fa-caret-down fa-xs"></i></button>
                     <ul id="select-layout-list" class="dropdown-menu">
                         <!-- JS inputs something here -->
                     </ul>
                 </div>
                 <div id="select-keymap" class="menu-item">
-                    <button id="select-keymap-button"><i class="fa-solid fa-upload fa-sm"></i> Load Keymap <i class="fa-solid fa-caret-down fa-xs"></i></button>
+                    <button id="select-keymap-button" class="menu-button"><i class="fa-solid fa-upload fa-sm"></i> Load Keymap <i class="fa-solid fa-caret-down fa-xs"></i></button>
                     <ul id="select-keymap-list", class="dropdown-menu">
                         <!-- JS inputs something here -->
                     </ul>
                 </div>
 
                 <div id="write-keymap" class="menu-item">
-                    <button id="write-keymap-button"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #ffffff;"></i> Write Keymap</button>
+                    <button id="write-keymap-button" class="menu-button"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #ffffff;"></i> Write Keymap</button>
                     <div id="write-window-bg" class="popup-window-bg"  style="display: none">
                         <div id="write-window" class="popup-window">
                             <div id="write-window-header" class="popup-window-header">
@@ -38,26 +38,39 @@
                                 <button id="write-window-close-button" class="popup-window-close-button"><i class="fa-solid fa-times fa-xs"></i></button>
                             </div>
                             <div id="write-window-body" class="popup-window-body">
-                                <div id="write-window-body-left" class="popup-window-body-left">
-                                    <div id="write-window-body-left-keymap" class="popup-window-body-left-item">
-                                        <label class="popup-window-body-left-item-label">Keymap:</label>
-                                        <input id="write-window-body-left-keymap-input" class="popup-window-body-left-item-input" type="text" placeholder="Keymap name...">
-                                    </div>
-                                    <div id="write-window-body-left-layout" class="popup-window-body-left-item">
-                                        <label class="popup-window-body-left-item-label">Layout:</label>
-                                        <input id="write-window-body-left-layout-input" class="popup-window-body-left-item-input" type="text" placeholder="Layout name...">
-                                    </div>
-                                    <div id="write-window-body-left-destination" class="popup-window-body-left-item">
-                                        <label class="popup-window-body-left-item-label">Destination:</label>
-                                        <input id="write-window-body-left-destination-input" class="popup-window-body-left-item-input" type="text" placeholder="Destination...">
+                                <div id="write-window-body-select-keymap" class="popup-window-body-block">
+                                    <h4 id="write-window-body-select-keymap-title" class="popup-window-body-block-title">Select Keymap</h4>
+                                    <div id="write-window-body-select-keymap-body" class="popup-window-body-block-body">
+                                        <!-- JS inputs something here -->
                                     </div>
                                 </div>
+                                <div id="write-window-body-select-board" class="popup-window-body-block">
+                                    <h4 id="write-window-body-select-board-title" class="popup-window-body-block-title">Select Board</h4>
+                                    <div id="write-window-body-select-board-body" class="popup-window-body-block-body">
+                                        <div id="write-window-body-select-board-body-guide" class="popup-window-body-block-body-guide">
+                                            <div class="popup-window-body-block-body-guide-item">
+                                                <p>Board Name</p>
+                                            </div>
+                                            <div class="popup-window-body-block-body-guide-item">
+                                                <p>Board Port</p>
+                                            </div>
+                                            <div class="popup-window-body-block-body-guide-item">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <!-- JS inputs something here -->
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div id="write-window-footer" class="popup-window-footer">
+                                <button id="write-window-footer-write-button" class="popup-window-footer-write-button">Write</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div id="save-keymap" class="menu-item">
-                    <button id="save-keymap-button"><i class="fa-solid fa-floppy-disk fa-sm" style="color: #ffffff;"></i> Save Keymap</button>
+                    <button id="save-keymap-button" class="menu-button"><i class="fa-solid fa-floppy-disk fa-sm" style="color: #ffffff;"></i> Save Keymap</button>
                     <div id="save-dialog" class="dialog" style="display: none">
                         <div id="save-dialog-arrow" class="dialog-arrow"></div>
                         <p id="save-dialog-message" class="dialog-message">Saved!</p>

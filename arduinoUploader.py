@@ -19,7 +19,7 @@ class arduino_uploader:
             print(arduinoCli_path + 'doesn\'t work.')
             return
 
-    def hardware_selecter(self):
+    def get_hardware_list(self):
         print('Detecting Arduino boards...')
         self.boards = self.arduino.board.list()
         if len(self.boards['result']) < 1:
@@ -37,6 +37,10 @@ class arduino_uploader:
             except KeyError:
                 board_port = 'Unknown'
             print(str(i) + ': ' + board_name + '  ' + board_port)
+        return self.boards
+
+    def hardware_selecter(self):
+        self.boards = self.get_hardware_list()
         while True:
             self.input = input('select board: ')
             try:

@@ -2,6 +2,8 @@
 import eel
 import webbrowser
 import os, json
+import keymapGenerator
+import arduinoUploader
 
 
 
@@ -12,6 +14,7 @@ keycode_list_path = 'keycodeList.json'
 class web_gui:
     def __init__(self):
         eel.init('web')
+        self.keymap_generator = keymapGenerator.keymap_generator()
         
     ### @eel.expose付きで宣言した関数はJavaScriptから参照されるが、有効なselfは指定できないので、
     #   その関数内でselfは参照しないようにする必要がある。
@@ -36,8 +39,18 @@ class web_gui:
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
     def write(self, layout_name, keymap_name):
+        keymap = self.keymap_generator.convert_keymapFile_to_keymap(keymap_dir + keymap_name + '.keymap')
+        self.keymap_generator.generate_keymap_file(keymap, 'keymap.cpp')
+
         print('write: ' + layout_name + ', ' + keymap_name)
 
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def get_arduino_list(self):
+        print('get_arduino_list')
+        uploader = arduinoUploader.arduino_uploader()
+        return uploader.get_hardware_list()
 
 
     ### Two arguments are required when calling from Javascript. ###
@@ -112,6 +125,8 @@ class web_gui:
     def open_link_in_default_browser(self, url):
         webbrowser.open(url)
 
+
+    
 
     def load_layout(self, layout_name):
         print('load_layout: ' + layout_name)
