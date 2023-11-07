@@ -95,21 +95,22 @@ main {
 .dialog {
     position: absolute;
     z-index: 1000;
-    background-color: #eee;
+    background-color: #4cae4c;
     border: none;
     border-radius: 4px;
     padding: 1px;
     box-shadow: none;
 }
 
-.dialog:before {
+.dialog-arrow {
     content: "";
     position: absolute;
     top: -24px;
     left: 50%;
     margin-left: -15px;
     border: 12px solid transparent;
-    border-bottom: 12px solid #eee;
+    border-bottom: 12px solid;
+    border-bottom-color: #4cae4c;
     z-index: 2;
 }
 
@@ -118,6 +119,7 @@ main {
     white-space: nowrap;
     font-family: sans-serif;
     font-weight: 500;
+    color: white;
 }
 
 #save-dialog {

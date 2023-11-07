@@ -375,6 +375,26 @@ async function openLinkInDefaultBrowser(url) {
 }
 
 
+function showSaveDialog(message, color) {
+    let saveDialog = document.getElementById('save-dialog');
+    let saveDialogArrow = document.getElementById('save-dialog-arrow');
+    let saveDialogMessage = document.getElementById('save-dialog-message');
+    if (saveSetTimeoutId !== null) {
+        clearTimeout(saveSetTimeoutId);
+    }
+    saveDialogMessage.innerHTML = message;
+    saveDialog.style.backgroundColor = color;
+    saveDialogArrow.style.borderBottomColor = color;
+    saveDialog.style.display = 'block';
+    saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
+    saveSetTimeoutId = setTimeout(() => {
+        saveDialog.style.display = 'none';
+        saveSetTimeoutId = null;
+    }, 3000)
+
+}
+
+
 function closeWriteWindow() {
     writeWindow = document.getElementById('write-window-bg');
     writeWindow.style.display = 'none';
@@ -472,45 +492,15 @@ function main(){
         let saveDialog = document.getElementById('save-dialog');
         let saveDialogMessage = document.getElementById('save-dialog-message');
         if (currentKeymap === null) {
-            if (saveSetTimeoutId !== null) {
-                clearTimeout(saveSetTimeoutId);
-            }
-            saveDialogMessage.innerHTML = 'No keymap is loaded.'
-            saveDialog.style.color = 'red';
-            saveDialog.style.display = 'block';
-            saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
-            saveSetTimeoutId = setTimeout(() => {
-                saveDialog.style.display = 'none';
-                saveSetTimeoutId = null;    
-            }, 3000)
+            showSaveDialog('No keymap is loaded.', '#d9534f');
             return;
         }
         ret = await saveKeymap();
         if (ret === 0) {
-            if (saveSetTimeoutId !== null) {
-                clearTimeout(saveSetTimeoutId);
-            }
-            saveDialogMessage.innerHTML = 'Saved keymap saccessfully as ' + currentKeymap['name'] + '.'
-            saveDialog.style.color = '#4cae4c';
-            saveDialog.style.display = 'block';
-            saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
-            saveSetTimeoutId = setTimeout(() => {
-                saveDialog.style.display = 'none';
-                saveSetTimeoutId = null;
-            }, 3000)
+            showSaveDialog('Saved keymap ' + currentKeymap['name'] + '.', '#4cae4c');
         }
         else {
-            if (saveSetTimeoutId !== null) {
-                clearTimeout(saveSetTimeoutId);
-            }
-            saveDialogMessage.innerHTML = 'Failed to save keymap ' + currentKeymap['name'] + '.'
-            saveDialog.style.color = 'red';
-            saveDialog.style.display = 'block';
-            saveDialog.style.left = 'calc(50% - ' + saveDialog.getBoundingClientRect().width / 2 + 'px)';
-            saveSetTimeoutId = setTimeout(() => {
-                saveDialog.style.display = 'none';
-                saveSetTimeoutId = null;
-        }, 3000)
+            showSaveDialog('Failed to save keymap ' + currentKeymap['name'] + '.', '#d9534f');
         }
     });
 
