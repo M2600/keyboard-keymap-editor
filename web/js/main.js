@@ -7,7 +7,10 @@ var keycodeList = null;
 
 
 var saveSetTimeoutId = null;
-
+var writeConfig = {
+    'keymap': null,
+    'board': null
+};
 
 eel.expose(keyBoard_bg_resize);
 function keyBoard_bg_resize() {
@@ -317,11 +320,81 @@ function checkWriteConfig(writeConfig) {
     return true;
 }
 
-async function showArduinos() {
-    let writeConfig = {
-        'keymap': null,
-        'board': null
-    };
+async function showKeymapsWriteWindow() {
+    let keymapListDiv = document.getElementById('write-window-body-select-keymap-body');
+    let writeButton = document.getElementById('write-window-footer-write-button');
+
+    if(!checkWriteConfig(writeConfig)) {
+        writeButton.disabled = true;
+    }
+
+    let oldOptions = keymapListDiv.getElementsByClassName('write-window-body-select-keymap-body-item');
+    while (oldOptions.length > 0) {
+        keymapListDiv.removeChild(oldOptions[0]);
+    }
+
+    let loadingBlock = createLoadingBlock();
+    keymapListDiv.appendChild(loadingBlock);
+
+    let keymapList = await getKeymaps();
+    //console.log(keymapList);
+    loadingBlock.remove();
+
+    if (keymapList.length == 0) {
+        let option = document.createElement('div');
+        option.className = 'write-window-body-select-keymap-body-item';
+        let optionName = document.createElement('div');
+        optionName.className = 'write-window-body-select-keymap-body-item-keymap-name';
+        let optionSelect = document.createElement('div');
+        optionSelect.className = 'write-window-body-select-keymap-body-item-keymap-select';
+        let optionButton = document.createElement('button');
+        optionButton.className = 'write-window-body-select-keymap-body-item-keymap-button';
+
+        optionName.innerHTML = 'No keymap exists.';
+        optionButton.innerHTML = 'Select';
+        optionButton.disabled = true;
+
+        option.appendChild(optionName);
+        optionSelect.appendChild(optionButton);
+        option.appendChild(optionSelect);
+        keymapListDiv.appendChild(option);
+        return;
+    }
+
+    for (let i = 0; i < keymapList.length; i++) {
+        let option = document.createElement('div');
+        option.className = 'write-window-body-select-keymap-body-item';
+        let optionName = document.createElement('div');
+        optionName.className = 'write-window-body-select-keymap-body-item-keymap-name';
+        let optionSelect = document.createElement('div');
+        optionSelect.className = 'write-window-body-select-keymap-body-item-keymap-select';
+        let optionButton = document.createElement('button');
+        optionButton.className = 'write-window-body-select-keymap-body-item-keymap-button';
+
+        optionName.innerHTML = keymapList[i];
+        optionButton.innerHTML = 'Select';
+        optionButton.addEventListener('click', async function() {
+            let selectButtons = keymapListDiv.getElementsByTagName('button');
+            for (let i = 0; i < selectButtons.length; i++) {
+                selectButtons[i].innerHTML = 'Select';
+                selectButtons[i].disabled = false;
+            }
+            optionButton.innerHTML = 'Selected';
+            optionButton.disabled = true;
+
+            writeConfig['keymap'] = keymapList[i];
+            checkWriteConfig(writeConfig);
+        });
+
+        option.appendChild(optionName);
+        optionSelect.appendChild(optionButton);
+        option.appendChild(optionSelect);
+        keymapListDiv.appendChild(option);
+    }
+}
+
+async function showArduinosWriteWindow() {
+    
 
     let arduinoListDiv = document.getElementById('write-window-body-select-board-body');
     let writeButton = document.getElementById('write-window-footer-write-button');
@@ -330,7 +403,7 @@ async function showArduinos() {
         writeButton.disabled = true;
     }
 
-    let oldOptions = arduinoListDiv.getElementsByClassName('write-window-body-select-keymap-body-item');
+    let oldOptions = arduinoListDiv.getElementsByClassName('write-window-body-select-board-body-item');
     while (oldOptions.length > 0) {
         arduinoListDiv.removeChild(oldOptions[0]);
     }
@@ -341,6 +414,31 @@ async function showArduinos() {
     let arduinoList = await getArduinoList();
     //console.log(arduinoList);
     loadingBlock.remove();
+
+    if (typeof(arduinoList)!= 'object' || arduinoList['result'].length == 0) {
+        let optionElem = document.createElement('div');
+        let boardNameElem = document.createElement('div');
+        let boardPortElem = document.createElement('div');
+        let boardSelectElem = document.createElement('div');
+        let boardSelectButton = document.createElement('button');
+        optionElem.className = 'write-window-body-select-board-body-item';
+        boardNameElem.className = 'write-window-body-select-board-body-item-board-name';
+        boardPortElem.className = 'write-window-body-select-board-body-item-board-port';
+        boardSelectElem.className = 'write-window-body-select-board-body-item-board-select';
+        boardSelectButton.className = 'write-window-body-select-board-body-item-board-button';
+
+        boardNameElem.innerHTML = 'No board exists.';
+        boardPortElem.innerHTML = 'No port exists.';
+        boardSelectButton.innerHTML = 'Select';
+        boardSelectButton.disabled = true;
+
+        optionElem.appendChild(boardNameElem);
+        optionElem.appendChild(boardPortElem);
+        boardSelectElem.appendChild(boardSelectButton);
+        optionElem.appendChild(boardSelectElem);
+        arduinoListDiv.appendChild(optionElem);
+        return;
+    }
 
     for (let i = 0; i < arduinoList['result'].length; i++) {
         try {
@@ -362,11 +460,11 @@ async function showArduinos() {
         let boardPortElem = document.createElement('div');
         let boardSelectElem = document.createElement('div');
         let boardSelectButton = document.createElement('button');
-        optionElem.className = 'write-window-body-select-keymap-body-item';
-        boardNameElem.className = 'write-window-body-select-keymap-body-item-board-name';
-        boardPortElem.className = 'write-window-body-select-keymap-body-item-board-port';
-        boardSelectElem.className = 'write-window-body-select-keymap-body-item-board-select';
-        boardSelectButton.className = 'write-window-body-select-keymap-body-item-board-button';
+        optionElem.className = 'write-window-body-select-board-body-item';
+        boardNameElem.className = 'write-window-body-select-board-body-item-board-name';
+        boardPortElem.className = 'write-window-body-select-board-body-item-board-port';
+        boardSelectElem.className = 'write-window-body-select-board-body-item-board-select';
+        boardSelectButton.className = 'write-window-body-select-board-body-item-board-button';
 
         boardNameElem.innerHTML = boardName;
         boardPortElem.innerHTML = boardPort;
@@ -614,7 +712,9 @@ function main(){
     writeKeymapButton.addEventListener('click', async function() {
         let writeWindow = document.getElementById('write-window-bg');
         writeWindow.style.display = 'block';
-        showArduinos();
+
+        showKeymapsWriteWindow();
+        showArduinosWriteWindow();
     });
     
 
