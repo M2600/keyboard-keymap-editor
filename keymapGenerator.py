@@ -3,7 +3,9 @@ import json
 
 class keymap_generator:
 
-    def __init__(self, keymapTemplate_dir  = 'keymap_template'):
+    def __init__(self, keymapTemplate_dir  = 'keymap_template', key_list_path = 'keycodeList.json'):
+        with open(key_list_path, 'r') as f:
+            self.keycodeList = json.load(f)
         self.keymapTemplata_dir = keymapTemplate_dir
         self.keymapRow = 7 * 16  # 7 rows each 16 profiles
         self.keymapCol = 8       # 8 columns
@@ -22,6 +24,22 @@ class keymap_generator:
             for i in rule:
                 self.ret = self.ret[i]
             keymap.append(self.ret)
+        print('Keymap', end='')
+        print(keymap)
+        json.dump(keymap, open('test_out.json', 'w'), ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+
+        # replace keymap with keycode
+        for i, row in enumerate(keymap):
+            for j, col in enumerate(row):
+                if isinstance(col, str):
+                    try:
+                        keymap[i][j] = self.keycodeList['keyList'][col][1]
+
+                    except KeyError:
+                        print('Keycode not found: ' + col + ' at ' + str(i) + ', ' + str(j))
+                        return
+        print('Keymap_keycode', end='')
+        print(keymap)
         return keymap
 
 

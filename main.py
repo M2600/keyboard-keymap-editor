@@ -351,8 +351,7 @@ def main():
 
     uploader = arduino_uploader()
     #board_index = uploader.hardware_selecter()
-    #if board_index >= 0:
-    #    uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', board_index)
+    #uploader.upload('KeyboardNico/KeyboardNico/KeyboardNico.ino', board_index)
     
     layout_name = '3by3'
 

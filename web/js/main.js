@@ -579,6 +579,13 @@ async function saveKeymap_py(keymap, kaymapName) {
     return ret;
 }
 
+async function writeKeymap_py(keymap, board) {
+    // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
+    let ret = await eel.write('_', keymap, board)();
+    console.log(ret);
+    return ret;
+}
+
 async function openLinkInDefaultBrowser(url) {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
     let ret = await eel.open_link_in_default_browser('_', url)();
@@ -735,6 +742,11 @@ function main(){
     writeWindowCloseButton.addEventListener('click', function() {
         closeWriteWindow();
     });
+    let writeWindowFooterWriteButton = document.getElementById('write-window-footer-write-button');
+    writeWindowFooterWriteButton.addEventListener('click', async function() {
+        await writeKeymap_py(writeConfig['keymap'], writeConfig['board']);
+    });
+
 
 
 

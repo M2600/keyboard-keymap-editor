@@ -5,16 +5,17 @@ import os, json
 import keymapGenerator
 import arduinoUploader
 
-
+arduino_program_path = 'KeyboardNico/KeyboardNico/KeyboardNico.ino'
 
 layout_dir = 'layouts/'
 keymap_dir = 'keymaps/'
 keycode_list_path = 'keycodeList.json'
 
+
 class web_gui:
     def __init__(self):
         eel.init('web')
-        self.keymap_generator = keymapGenerator.keymap_generator()
+        
         
     ### @eel.expose付きで宣言した関数はJavaScriptから参照されるが、有効なselfは指定できないので、
     #   その関数内でselfは参照しないようにする必要がある。
@@ -38,11 +39,19 @@ class web_gui:
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
-    def write(self, layout_name, keymap_name):
-        keymap = self.keymap_generator.convert_keymapFile_to_keymap(keymap_dir + keymap_name + '.keymap')
-        self.keymap_generator.generate_keymap_file(keymap, 'keymap.cpp')
+    def write(self, keymap_name, boardDict):
+        keymap_file_output_path = 'KeyboardNico/KeyboardNico/keymap.h'
+        keymap_generator = keymapGenerator.keymap_generator()
+        uploader = arduinoUploader.arduino_uploader()
 
-        print('write: ' + layout_name + ', ' + keymap_name)
+        keymap = keymap_generator.convert_keymapFile_to_keymap(keymap_dir + keymap_name + '.keymap')
+        if keymap == None:
+            return -1
+        keymap_generator.generate_keymap_file(keymap, keymap_file_output_path)
+
+        print('writing: ' + keymap_name + ', ' + boardDict['matching_boards'][0]['fqbn'])
+
+        #uploader.upload(arduino_program_path, boardDict)
 
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###

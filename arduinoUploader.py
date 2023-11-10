@@ -50,10 +50,10 @@ class arduino_uploader:
                 print('Invalid input')
                 continue
 
-    def upload(self, sketch_dir, board_index):
+    def upload(self, sketch_dir, board_dict):
         try:
-            print('Compiling ' + sketch_dir + ' with ' + self.boards['result'][board_index]['matching_boards'][0]['fqbn'])
-            self.compile_result = self.arduino.compile(sketch_dir, fqbn=self.boards['result'][board_index]['matching_boards'][0]['fqbn'])
+            print('Compiling ' + sketch_dir + ' with ' + board_dict['matching_boards'][0]['fqbn'])
+            self.compile_result = self.arduino.compile(sketch_dir, fqbn=board_dict['matching_boards'][0]['fqbn'])
         except pyduinocli.ArduinoError as e:
             print(e.result['__stderr'])
             print('Compile failed')
@@ -66,8 +66,8 @@ class arduino_uploader:
             print('Compile success')
 
         try:
-            print('Uploading ' + sketch_dir + ' with ' + self.boards['result'][board_index]['matching_boards'][0]['name'] + ' ' + self.boards['result'][board_index]['port']['address'])
-            self.arduino.upload(sketch_dir, fqbn=self.boards['result'][board_index]['matching_boards'][0]['fqbn'], port=self.boards['result'][board_index]['port']['address'])
+            print('Uploading ' + sketch_dir + ' with ' + board_dict['matching_boards'][0]['name'] + ' ' + board_dict['port']['address'])
+            self.arduino.upload(sketch_dir, fqbn=board_dict['matching_boards'][0]['fqbn'], port=board_dict['port']['address'])
         except pyduinocli.ArduinoError as e:
             print(e.result['__stderr'])
             print('Upload failed')
@@ -77,3 +77,5 @@ class arduino_uploader:
             return
         else:
             print('Upload success')
+
+
