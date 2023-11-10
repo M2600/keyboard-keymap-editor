@@ -189,6 +189,8 @@ main {
 
 .popup-window-body-block-body {
     padding: 5px;
+    overflow-y: auto;
+    max-height: 280px;
 }
 
 .write-window-body-select-keymap-body-item, .write-window-body-select-board-body-item {
@@ -238,7 +240,7 @@ main {
 
 .write-window-body-select-board-body-item div {
     display: inline-block;
-    width: 33%;
+    width: 33.33%;
     font-size: 14px;
 }
 

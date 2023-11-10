@@ -236,6 +236,7 @@ async function createKeyboard(layout_name) {
             e.forEach((e, j) => {
                 if (e.length < 4) {
                     //console.log('warning: key ' + i + ',' + j + ' is not enough length. Skip this key.');
+                    return;
                 }
                 else if (e.length < 7){
                     e.concat([0, 0, 0]);
@@ -283,6 +284,9 @@ function reloadLabel() {
         e.forEach((f, j) => {
             //console.log(String(i) + String(j) + f);
             keyLabel = document.getElementById('label-' + String(i) + ':' + String(j));
+            if(keyLabel === null) {
+                return;
+            }
             //console.log(keyLabel)
             try {
                 keyLabel.innerHTML = keycodeList['keyList'][String(f)][0];
@@ -383,7 +387,9 @@ async function showKeymapsWriteWindow() {
             optionButton.disabled = true;
 
             writeConfig['keymap'] = keymapList[i];
-            checkWriteConfig(writeConfig);
+            if (checkWriteConfig(writeConfig)) {
+                writeButton.disabled = false;
+            }
         });
 
         option.appendChild(optionName);
@@ -480,7 +486,9 @@ async function showArduinosWriteWindow() {
             boardSelectButton.disabled = true;
 
             writeConfig['board'] = arduinoList['result'][i];
-            checkWriteConfig(writeConfig);
+            if (checkWriteConfig(writeConfig)) {
+                writeButton.disabled = false;
+            }
         });
         
 
@@ -600,6 +608,10 @@ function showSaveDialog(message, color) {
 function closeWriteWindow() {
     writeWindow = document.getElementById('write-window-bg');
     writeWindow.style.display = 'none';
+    writeConfig = {
+        'keymap': null,
+        'board': null
+    };
 }
 
 
