@@ -51,7 +51,7 @@ class web_gui:
 
         print('writing: ' + keymap_name + ', ' + boardDict['matching_boards'][0]['fqbn'])
 
-        #uploader.upload(arduino_program_path, boardDict)
+        uploader.upload(arduino_program_path, boardDict)
 
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###
