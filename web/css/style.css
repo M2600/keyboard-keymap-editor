@@ -32,12 +32,78 @@ main {
     border-radius: 4px;
 }
 
+.dropdown-item-div {
+    margin: 0;
+    padding-right: 5px;
+    display: flex;
+}
+
 .dropdown-item {
+    margin: 0;
     padding: 3px 20px;
     font-family: sans-serif;
     font-size: 14px;
     text-align: left;
+    width: 50px;
 }
+
+.delete-keymap-button {
+    margin: 1px 0 1px;
+    font-family: sans-serif;
+    background-color: #fff;
+    border: none;
+    border-radius: 4px;
+    display: block;
+}
+
+.delete-keymap-button:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.delete-keymap-dialog {
+    position: absolute;
+    right: -45%;
+    top: 39%;
+    z-index: 1000;
+    background-color: #5cb85c;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    padding: 1px;
+    box-shadow: none;
+    
+}
+
+.delete-keymap-dialog-message {
+    margin: 3px;
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-weight: 500;
+    color: white;
+}
+
+.delete-keymap-dialog-arrow {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -1%;
+    right: 100%;
+    margin-left: -15px;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-right: 12px solid;
+    z-index: 2;
+}
+
+
+
+
+
+
+
+
 
 #keyboard-menu {
     border-bottom: solid 1px #ccc;
@@ -298,6 +364,23 @@ main {
     cursor: not-allowed;
 }
 
+.popup-window-footer-message {
+    display: inline-block;
+    width: 80%;
+}
+
+.popup-window-footer-message-text {
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #777;
+}
+
+.popup-window-footer-write {
+    display: inline-block;
+}
+
 
 
 
@@ -474,3 +557,5 @@ footer {
     font-weight: 400;
     color: #777;
 }
+
+

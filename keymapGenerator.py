@@ -37,7 +37,7 @@ class keymap_generator:
 
                     except KeyError:
                         print('Keycode not found: ' + col + ' at ' + str(i) + ', ' + str(j))
-                        return
+                        return -1
         print('Keymap_keycode', end='')
         print(keymap)
         return keymap
@@ -48,18 +48,18 @@ class keymap_generator:
         # Check keymap size
         if len(keymap) != self.keymapRow:
             print('keymap row size error')
-            return
+            return 'keymap row size error'
         else:
             for col in keymap:
                 if len(col) != self.keymapCol:
                     print('keymap column size error')
-                    return
+                    return 'keymap column size error'
                 else:
                     for key in col:
                         if isinstance(key, list):
                             print(
                                 'Keymap dimension is too high. It must be 2D array.')
-                            return
+                            return 'Keymap dimension is too high. It must be 2D array.'
         # Generate keymap file
         keymap_text = self.keymapTemplate + \
             self.generate_cpp_array_from_python_array(
@@ -67,6 +67,7 @@ class keymap_generator:
         with open(self.keymapFile_dir, 'w') as f:
             f.write(keymap_text)
         print(self.keymapFile_dir + ' generated.')
+        return 0
 
     def generate_cpp_array_from_python_array(self, arrayName, keymap):
         self.cpp_array = ''

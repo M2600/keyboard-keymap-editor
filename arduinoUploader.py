@@ -57,11 +57,11 @@ class arduino_uploader:
         except pyduinocli.ArduinoError as e:
             print(e.result['__stderr'])
             print('Compile failed')
-            return
+            return 'Compile failed'
         except KeyError as e:
             print(e)
             print('Can\'t compile with this board')
-            return
+            return 'Can\'t compile with this board'
         else:
             print('Compile success')
 
@@ -71,11 +71,12 @@ class arduino_uploader:
         except pyduinocli.ArduinoError as e:
             print(e.result['__stderr'])
             print('Upload failed')
-            return
+            return 'Upload failed'
         except KeyError as e:
             print('Can\'t upload with this board')
-            return
+            return 'Can\'t upload with this board'
         else:
             print('Upload success')
+            return 'Upload success'
 
 

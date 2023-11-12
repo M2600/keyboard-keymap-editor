@@ -35,6 +35,18 @@ class web_gui:
             json.dump(key_map, f, ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
         print('save: layout: ' + layout_name + ', name: ' + keymap_name)
         return 0
+    
+    ### Two arguments are required when calling from Javascript. ###
+    ### However, the first argument is not referenced, so set it to whatever you like. ###
+    @eel.expose
+    def delete_keymap(self, keymap_name):
+        try:
+            os.remove(keymap_dir + keymap_name + '.keymap')
+        except FileNotFoundError as e:
+            print(e)
+            return 'error: keymap file "' + keymap_dir + keymap_name + '.keymap" not found.'
+        print('delete: ' + keymap_name)
+        return 0
 
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###
@@ -45,13 +57,16 @@ class web_gui:
         uploader = arduinoUploader.arduino_uploader()
 
         keymap = keymap_generator.convert_keymapFile_to_keymap(keymap_dir + keymap_name + '.keymap')
-        if keymap == None:
-            return -1
-        keymap_generator.generate_keymap_file(keymap, keymap_file_output_path)
+        if keymap == -1:
+            return 'convert_keymapFile_to_keymap error'
+        ret = keymap_generator.generate_keymap_file(keymap, keymap_file_output_path)
+        if ret != 0:
+            return ret
 
         print('writing: ' + keymap_name + ', ' + boardDict['matching_boards'][0]['fqbn'])
 
-        uploader.upload(arduino_program_path, boardDict)
+        upload_ret = uploader.upload(arduino_program_path, boardDict)
+        return upload_ret
 
     ### Two arguments are required when calling from Javascript. ###
     ### However, the first argument is not referenced, so set it to whatever you like. ###

@@ -611,6 +611,35 @@ function showSaveDialog(message, color) {
 
 }
 
+function showDeleteKeymapDialog(message, color) {
+    let deleteKeymapDialog = document.createElement('div');
+    deleteKeymapDialog.id = 'delete-keymap-dialog';
+    deleteKeymapDialog.className = 'delete-keymap-dialog';
+    let deleteKeymapDialogArrow = document.createElement('div');
+    deleteKeymapDialogArrow.id = 'delete-keymap-dialog-arrow';
+    deleteKeymapDialogArrow.className = 'delete-keymap-dialog-arrow';
+    let deleteKeymapDialogMessage = document.createElement('p');
+    deleteKeymapDialogMessage.id = 'delete-keymap-dialog-message';
+    deleteKeymapDialogMessage.className = 'delete-keymap-dialog-message';
+    deleteKeymapDialogMessage.innerHTML = message;
+
+    deleteKeymapDialog.style.backgroundColor = color;
+    deleteKeymapDialogArrow.style.borderRightColor = color;
+
+    deleteKeymapDialog.appendChild(deleteKeymapDialogArrow);
+    deleteKeymapDialog.appendChild(deleteKeymapDialogMessage);
+    
+    return deleteKeymapDialog;
+}
+
+function deleteKeymapDialogReposition(parentObj, dialogObj) {
+    let parentPos = parentObj.getBoundingClientRect();
+    let right= Number(parentPos.left) + Number(parentObj.getBoundingClientRect().width);
+    let top = Number(parentPos.top) - 49;
+    dialogObj.style.left = Number(right) + 'px';
+    dialogObj.style.top = Number(top) + 'px';
+}
+
 
 function closeWriteWindow() {
     writeWindow = document.getElementById('write-window-bg');
@@ -620,6 +649,7 @@ function closeWriteWindow() {
         'board': null
     };
 }
+
 
 
 function main(){
@@ -675,33 +705,66 @@ function main(){
 
     selectKeymapButton.onclick = () => {
         keymapDropdown.style.display = 'block';
+        //dropmenuResize();
         oldOptions = keymapDropdown.getElementsByTagName('li');
         while (oldOptions.length > 0) {
             keymapDropdown.removeChild(oldOptions[0]);
         }
         document.addEventListener('click', function(e) {
-            if (e.target.id != 'select-keymap-button') {
+            if (e.target.id != 'select-keymap-button' && e.target.className != 'fas fa-trash-alt' && e.target.className != 'delete-keymap-button') {
+                //console.log(e.target.className)
                 keymapDropdown.style.display = 'none';
             }
         });
         getKeymaps().then((value) => {
             value.forEach((e) => {
-                let option = document.createElement('li');
+                let optionDiv = document.createElement('li');
+                optionDiv.className = 'dropdown-item-div';
+                let option = document.createElement('p');
                 option.className = 'dropdown-item';
                 option.innerHTML = e;
+                let deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-keymap-button';
+                deleteButton.innerHTML = '<i class="fas fa-trash-alt" style="color: #777"></i>';
+
+
+                deleteButton.addEventListener('click', async function() {
+                    let ret = await eel.delete_keymap('_', e)();
+                    //let ret=-1; //for debug
+                    if (ret === 0) {
+                        let dialog = showDeleteKeymapDialog('Deleted', '#5cb85c')
+                        dialog.style.width = '50%'
+                        deleteButton.appendChild(dialog);
+                        deleteKeymapDialogReposition(deleteButton, dialog);
+                        setTimeout(() => {
+                            optionDiv.remove();
+                        }, 1000);
+                    }
+                    else {
+                        let dialog = showDeleteKeymapDialog('Failed to delete', '#d9534f')
+                        deleteButton.appendChild(dialog);
+                        dialog.style.width = '90%'
+                        deleteKeymapDialogReposition(deleteButton, dialog);
+                        setTimeout(() => {
+                            dialog.remove();
+                        }, 1000);
+                    }
+                });
 
                 option.addEventListener('mouseover', function() {
-                    option.style.backgroundColor = '#eee';
-                    option.style.cursor = 'pointer';
+                    optionDiv.style.backgroundColor = '#eee';
+                    optionDiv.style.cursor = 'pointer';
                 });
                 option.addEventListener('mouseout', function() {
-                    option.style.backgroundColor = 'white';
-                    option.style.cursor = 'default';
+                    optionDiv.style.backgroundColor = 'white';
+                    optionDiv.style.cursor = 'default';
                 });
                 option.addEventListener('click', function() {
                     createKeymap(e);
                 });
-                keymapDropdown.appendChild(option);
+                optionDiv.appendChild(option);
+                optionDiv.appendChild(deleteButton);
+                keymapDropdown.appendChild(optionDiv);
             })
         })
     };
@@ -718,10 +781,10 @@ function main(){
         }
         ret = await saveKeymap();
         if (ret === 0) {
-            showSaveDialog('Saved keymap ' + currentKeymap['name'] + '.', '#5cb85c');
+            showSaveDialog('Saved keymap ' + currentKeymap['name'], '#5cb85c');
         }
         else {
-            showSaveDialog('Failed to save keymap ' + currentKeymap['name'] + '.', '#d9534f');
+            showSaveDialog('Failed to save keymap ' + currentKeymap['name'], '#d9534f');
         }
     });
 
@@ -744,7 +807,15 @@ function main(){
     });
     let writeWindowFooterWriteButton = document.getElementById('write-window-footer-write-button');
     writeWindowFooterWriteButton.addEventListener('click', async function() {
-        await writeKeymap_py(writeConfig['keymap'], writeConfig['board']);
+        writeWindowFooterWriteButton.disabled = true;
+        writeWindowFooterWriteButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        let writeMessage = document.getElementById('write-window-footer-message-text');
+        writeMessage.innerHTML = 'Compiling and writing...';
+
+        ret = await writeKeymap_py(writeConfig['keymap'], writeConfig['board']);
+        writeMessage.innerHTML = ret;
+        writeWindowFooterWriteButton.innerHTML = 'Write';
+        writeWindowFooterWriteButton.disabled = false;
     });
 
 
@@ -801,6 +872,9 @@ function main(){
         });
         aElems[i].href = 'javascript:void(0)';
     }
+
+    
+
 }
 
 main();
