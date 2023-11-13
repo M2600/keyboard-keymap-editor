@@ -122,9 +122,9 @@ class web_gui:
     ### However, the first argument is not referenced, so set it to whatever you like. ###
     @eel.expose
     def get_keymap_list(self):
-        json_list = [
+        json_list = sorted([
             f.replace('.keymap', '') for f in os.listdir(keymap_dir) if f.endswith('.keymap')
-        ]
+        ])
         print('get_keymap_list: ', end='')
         print(json_list)
         return json_list
