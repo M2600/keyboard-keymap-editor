@@ -930,11 +930,11 @@ function main(){
     let aElems = document.getElementsByTagName('a');
     for (let i = 0; i < aElems.length; i++) {
         link = aElems[i].href;
+        aElems[i].href = 'javascript:void(0)';
         aElems[i].addEventListener('click', () => {
             openLinkInDefaultBrowser(link);
             //console.log(aElems[i].href)
         });
-        aElems[i].href = 'javascript:void(0)';
     }
 
     
