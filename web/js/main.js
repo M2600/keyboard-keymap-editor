@@ -652,7 +652,7 @@ async function writeKeymap_py(keymap, board) {
 
 async function openLinkInDefaultBrowser(url) {
     // Python function requires "self" argument. But it can't from JS. So, I use "_" instead of "self".
-    let ret = await eel.open_link_in_default_browser('_', url)();
+    let ret = eel.link_opener(url);
 }
 
 
@@ -934,6 +934,7 @@ function main(){
         aElems[i].addEventListener('click', () => {
             openLinkInDefaultBrowser(link);
             //console.log(aElems[i].href)
+            
         });
     }
 

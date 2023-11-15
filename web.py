@@ -143,11 +143,6 @@ class web_gui:
             return 'error: keymap file "' + keymap_path + '" not found.'
         return keymap
     
-    ### One argument are required when calling from Javascript. ###
-    ### However, the first argument is not referenced, so set it to whatever you like. ###
-    @eel.expose
-    def open_link_in_default_browser(self, url):
-        webbrowser.open(url, new=1, autoraise=True)
 
 
     
@@ -166,6 +161,11 @@ class web_gui:
 
     def keyBoard_bg_resize(self):
         eel.keyBoard_bg_resize()
+
+@eel.expose
+def link_opener(url):
+    webbrowser.open(url, new=2)
+    #os.startfile(url)
 
 def main():
     pass
