@@ -3,6 +3,7 @@ const keyCapWidth = 54;
 const keyCapHeight = 54;
 
 var currentKeymap = null;
+var currentKeymapLayer = null;
 var keycodeList = null;
 
 
@@ -182,7 +183,7 @@ function createKey(id, xrate, yrate, wrate, hrate, rotate = 0, ranchorX = 0, ran
                     keyInputSelect.addEventListener('change', function() {
                         //console.log(this.value);
                         currentKeymap['keymap'][keyLayer][key][keyIndexes[0]][keyIndexes[1]] = this.value;
-                        reloadLabel();
+                        reloadLabel(currentKeymap['keymap'][currentKeymapLayer['profile']][currentKeymapLayer['layer']]);
                     });
 
                     // option = document.createElement('option');
@@ -246,6 +247,8 @@ async function createKeyboard(layout_name) {
         });
         keyBoard_bg_resize();
     });
+    //createKeyboardChangeLayerControl(layout['layerList']);
+    //reloadLabel();
 }
 
 function clearKeyProperty() {
@@ -273,14 +276,75 @@ async function createKeymap(keymap_name) {
         keymap_name_input.value = currentKeymap['name'];
         keymap_description_textarea.value = currentKeymap['description'];
 
-        reloadLabel();
+        createKeyboardChangeLayerControl();
+
+        for(let keyLayer in currentKeymap['keymap']) {
+            for(let key in currentKeymap['keymap'][keyLayer]) {
+                currentKeymapLayer = {'profile': keyLayer,
+                                    'layer': key};
+                reloadLabel(currentKeymap['keymap'][currentKeymapLayer['profile']][currentKeymapLayer['layer']]);
+                //console.log('change layer to ' + keyLayer + ' ' + key)
+                break;
+            }
+            break;
+        }
     });
 }
 
-function reloadLabel() {
+
+function createKeyboardChangeLayerControl() {
+    let changeLayerControlDiv = document.getElementById('keyboard-control-change-layer-div');
+    let oldItems = changeLayerControlDiv.children;
+    while (oldItems.length > 0) {
+        changeLayerControlDiv.removeChild(oldItems[0]);
+    }
+
+    for (let layer in currentKeymap['keymap']) {
+        let changeLayerControlProfileDiv = document.createElement('div');
+        changeLayerControlProfileDiv.className = 'keyboard-control-change-layer-profile-div';
+        let changeLayerControlProfileLabel = document.createElement('label');
+        changeLayerControlProfileLabel.className = 'keyboard-control-change-layer-profile-label';
+        changeLayerControlProfileLabel.innerHTML = layer;
+        let changeLayerControlProfileUl = document.createElement('ul');
+        changeLayerControlProfileUl.className = 'keyboard-control-change-layer-profile-ul';
+
+
+        changeLayerControlProfileDiv.appendChild(changeLayerControlProfileLabel);
+        changeLayerControlProfileDiv.appendChild(changeLayerControlProfileUl);
+
+        for (let key in currentKeymap['keymap'][layer]) {
+            let changeLayerControlLi = document.createElement('li');
+            changeLayerControlLi.className = 'keyboard-control-change-layer-li';
+        
+            let changeLayerControlButton = document.createElement('button');
+            changeLayerControlButton.className = 'keyboard-control-change-layer-button';
+            changeLayerControlButton.innerHTML = key;
+            changeLayerControlButton.addEventListener('click', function() {
+                let oldActiveButton = document.getElementsByClassName('active-layer-button');
+                if (oldActiveButton.length > 0) {
+                    oldActiveButton[0].classList.remove('active-layer-button');
+                }
+                changeLayerControlButton.classList.add('active-layer-button');
+                //console.log('click: ' + layerList[i]);
+                currentKeymapLayer = {'profile': layer,
+                                    'layer': key};
+                reloadLabel(currentKeymap['keymap'][currentKeymapLayer['profile']][currentKeymapLayer['layer']]);
+                console.log('change layer to ' + layer + ' ' + key);
+                //console.log(currentKeymapLayer);
+            });
+        
+            changeLayerControlLi.appendChild(changeLayerControlButton);
+            changeLayerControlProfileUl.appendChild(changeLayerControlLi);
+        }
+        changeLayerControlDiv.appendChild(changeLayerControlProfileDiv);
+    }
+}
+
+
+function reloadLabel(keymap) {
     let keymap_default = currentKeymap['keymap']['default']['default'];
     //console.log(keymap_default)
-    keymap_default.forEach((e, i) => {
+    keymap.forEach((e, i) => {
         e.forEach((f, j) => {
             //console.log(String(i) + String(j) + f);
             keyLabel = document.getElementById('label-' + String(i) + ':' + String(j));
