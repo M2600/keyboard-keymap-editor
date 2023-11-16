@@ -299,6 +299,7 @@ function createKeyboardChangeLayerControl() {
         changeLayerControlDiv.removeChild(oldItems[0]);
     }
 
+    let activateFirstLayerFlag = false;
     for (let layer in currentKeymap['keymap']) {
         let changeLayerControlProfileDiv = document.createElement('div');
         changeLayerControlProfileDiv.className = 'keyboard-control-change-layer-profile-div';
@@ -312,12 +313,17 @@ function createKeyboardChangeLayerControl() {
         changeLayerControlProfileDiv.appendChild(changeLayerControlProfileLabel);
         changeLayerControlProfileDiv.appendChild(changeLayerControlProfileUl);
 
+        
         for (let key in currentKeymap['keymap'][layer]) {
             let changeLayerControlLi = document.createElement('li');
             changeLayerControlLi.className = 'keyboard-control-change-layer-li';
         
             let changeLayerControlButton = document.createElement('button');
             changeLayerControlButton.className = 'keyboard-control-change-layer-button';
+            if (!activateFirstLayerFlag) {
+                changeLayerControlButton.classList.add('active-layer-button');
+                activateFirstLayerFlag = true;
+            }
             changeLayerControlButton.innerHTML = key;
             changeLayerControlButton.addEventListener('click', function() {
                 let oldActiveButton = document.getElementsByClassName('active-layer-button');
