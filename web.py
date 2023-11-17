@@ -1,7 +1,7 @@
 
 import eel
-import webbrowser
-import os, json
+import subprocess
+import os, json, sys
 import keymapGenerator
 import arduinoUploader
 
@@ -164,8 +164,15 @@ class web_gui:
 
 @eel.expose
 def link_opener(url):
-    webbrowser.open(url, new=2)
-    #os.startfile(url)
+    # Using windows
+    if sys.platform == 'win32':
+        os.startfile(url)
+    # Using other OS
+    else:
+        # Mac for 'open', Linux for 'xdg-open'
+        opener = 'open' if sys.platform == 'darwin' else 'xdg-open'
+        subprocess.call([opener, url])
+    
 
 def main():
     pass
