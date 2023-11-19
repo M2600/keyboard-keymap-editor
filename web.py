@@ -1,3 +1,9 @@
+import sys
+from io import StringIO
+if sys.stdout is None:
+    sys.stdout = StringIO()
+if sys.stderr is None:
+    sys.stderr = StringIO()
 
 import eel
 import subprocess

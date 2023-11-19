@@ -1,6 +1,10 @@
 
 
 .vscode
+
+/build
+/dist
+
 /keymap.h
 /KeyboardNico/KeyboardNico/keymap.h
 

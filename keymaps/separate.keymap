@@ -1057,7 +1057,7 @@
                     ")",
                     "Y",
                     "U",
-                    "I",
+                    "ARROW_UP",
                     "O",
                     "P",
                     "[",
@@ -1066,9 +1066,9 @@
                 [
                     "}",
                     "H",
-                    "J",
-                    "K",
-                    "L",
+                    "ARROW_LEFT",
+                    "ARROW_DOWN",
+                    "ARROW_RIGHT",
                     ";",
                     "'",
                     "ENTER"
