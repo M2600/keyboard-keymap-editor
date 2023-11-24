@@ -5,6 +5,7 @@
 /build
 /dist
 /main.spec
+/main
 
 /keymap.h
 /KeyboardNico/KeyboardNico/keymap.h
