@@ -26,7 +26,7 @@ class keymap_generator:
             keymap.append(self.ret)
         print('Keymap', end='')
         print(keymap)
-        json.dump(keymap, open('test_out.json', 'w'), ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+        #json.dump(keymap, open('test_out.json', 'w'), ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
 
         # replace keymap with keycode
         for i, row in enumerate(keymap):
