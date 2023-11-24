@@ -7,7 +7,7 @@
 /main.spec
 /main
 
-/build/*
+/build
 
 /keymap.h
 /KeyboardNico/KeyboardNico/keymap.h
