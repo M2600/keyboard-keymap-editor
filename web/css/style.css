@@ -1,4 +1,26 @@
 
+
+
+:root {
+    /* color */
+    /* --color-primary: #5cb85c;
+    --color-primary-hover: #449d44;
+    --color-primary-active: #398439;
+    --color-primary-disabled: #2b89f5;
+    --color-primary-border: #4cae4c; */
+
+    --color-primary: #74b9ff;
+    --color-primary-hover: #0984e3;
+    --color-primary-active: #0652DD;
+    --color-primary-disabled: #ff7675;
+    --color-primary-border: #0984e3;
+
+}
+
+
+
+
+
 html {
     height: 100%;
     position: relative;
@@ -66,7 +88,7 @@ main {
     right: -45%;
     top: 39%;
     z-index: 1000;
-    background-color: #5cb85c;
+    background-color: var(--color-primary);
     border: none;
     border-radius: 0 4px 4px 0;
     padding: 1px;
@@ -124,6 +146,10 @@ main {
     font-weight: 400;
 }
 
+.menu-button i {
+    pointer-events: none;
+}
+
 #keyboard-menu #select-layout-button, #select-keymap-button {
     color: #333;
     background-color: #fff;
@@ -147,20 +173,20 @@ main {
 #keyboard-menu #save-keymap-button, #write-keymap-button {
     margin: 0 2px;
     color: #fff;
-    background-color: #5cb85c;
-    border: solid 1px #4cae4c;
+    background-color: var(--color-primary);
+    border: solid 1px var(--color-primary-border);
     border-radius: 4px;
 }
 
 #keyboard-menu #save-keymap-button:hover, #write-keymap-button:hover{
-    background-color: #449d44;
+    background-color: var(--color-primary-hover);
     cursor: pointer;
 }
 
 .dialog {
     position: absolute;
     z-index: 1000;
-    background-color: #5cb85c;
+    background-color: var(--color-primary);
     border: none;
     border-radius: 4px;
     padding: 1px;
@@ -175,7 +201,7 @@ main {
     margin-left: -15px;
     border: 12px solid transparent;
     border-bottom: 12px solid;
-    border-bottom-color: #5cb85c;
+    border-bottom-color: var(--color-primary);
     z-index: 2;
 }
 
@@ -325,7 +351,7 @@ main {
     padding: 5px;
     border: none;
     border-radius: 4px;
-    background-color: #5cb85c;
+    background-color: var(--color-primary);
     font-family: sans-serif;
     color: white;
     font-size: 14px;
@@ -333,11 +359,11 @@ main {
 }
 
 .write-window-body-select-keymap-body-item button:hover, .write-window-body-select-board-body-item button:hover {
-    background-color: #449d44;
+    background-color: var(--color-primary-hover);
 }
 
 .write-window-body-select-keymap-body-item button:disabled, .write-window-body-select-board-body-item button:disabled {
-    background-color: #2b89f5;
+    background-color: var(--color-primary-disabled);
     cursor: not-allowed;
 }
 
@@ -352,7 +378,7 @@ main {
     padding: 8px;
     border: none;
     border-radius: 4px;
-    background-color: #5cb85c;
+    background-color: var(--color-primary);
     font-family: sans-serif;
     color: white;
     font-size: 14px;
@@ -361,7 +387,7 @@ main {
 }
 
 .popup-window-footer button:hover {
-    background-color: #449d44;
+    background-color: var(--color-primary-hover);
 }
 
 .popup-window-footer button:disabled {
@@ -406,7 +432,7 @@ main {
 #keyboard {
     margin: 5px;
     padding: 4px;
-    border: dashed 1px #ddd;
+    /*border: dashed 1px #ddd;*/
 }
 
 #keyboard div {
@@ -486,8 +512,8 @@ main {
     background-color: #ddd;
 }
 .active-layer-button {
-    background-color: #5cb85c !important;
-    border-color: #4cae4c !important;
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary-border) !important;
     color: #fff !important;
 }
 

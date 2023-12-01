@@ -1055,11 +1055,11 @@
                 ],
                 [
                     ")",
-                    "HOME",
                     "PAGE_UP",
+                    "HOME",
                     "ARROW_UP",
-                    "PAGE_DOWN",
                     "END",
+                    "PAGE_DOWN",
                     "[",
                     "]"
                 ],
@@ -1625,11 +1625,11 @@
                 ],
                 [
                     ")",
-                    "HOME",
                     "PAGE_UP",
+                    "HOME",
                     "ARROW_UP",
-                    "PAGE_DOWN",
                     "END",
+                    "PAGE_DOWN",
                     "[",
                     "]"
                 ],
