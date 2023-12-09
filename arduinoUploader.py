@@ -5,7 +5,7 @@ import os
 class arduino_uploader:
     def __init__(self):
         if os.name == 'nt':
-            arduinoCli_path = 'arduino-cli/arduino-cli.exe'
+            arduinoCli_path = 'arduino-cli'
         elif os.name == 'posix':
             arduinoCli_path = 'arduino-cli'
         else:
