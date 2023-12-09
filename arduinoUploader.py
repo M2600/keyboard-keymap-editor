@@ -5,7 +5,7 @@ import os
 class arduino_uploader:
     def __init__(self):
         if os.name == 'nt':
-            arduinoCli_path = 'arduino-cli/arduino-cli.exe'
+            arduinoCli_path = 'arduino-cli'
         elif os.name == 'posix':
             arduinoCli_path = 'arduino-cli'
         else:
@@ -19,7 +19,7 @@ class arduino_uploader:
             print(arduinoCli_path + 'doesn\'t work.')
             return
 
-    def hardware_selecter(self):
+    def get_hardware_list(self):
         print('Detecting Arduino boards...')
         self.boards = self.arduino.board.list()
         if len(self.boards['result']) < 1:
@@ -37,6 +37,10 @@ class arduino_uploader:
             except KeyError:
                 board_port = 'Unknown'
             print(str(i) + ': ' + board_name + '  ' + board_port)
+        return self.boards
+
+    def hardware_selecter(self):
+        self.boards = self.get_hardware_list()
         while True:
             self.input = input('select board: ')
             try:
@@ -46,30 +50,33 @@ class arduino_uploader:
                 print('Invalid input')
                 continue
 
-    def upload(self, sketch_dir, board_index):
+    def upload(self, sketch_dir, board_dict):
         try:
-            print('Compiling ' + sketch_dir + ' with ' + self.boards['result'][board_index]['matching_boards'][0]['fqbn'])
-            self.compile_result = self.arduino.compile(sketch_dir, fqbn=self.boards['result'][board_index]['matching_boards'][0]['fqbn'])
+            print('Compiling ' + sketch_dir + ' with ' + board_dict['matching_boards'][0]['fqbn'])
+            self.compile_result = self.arduino.compile(sketch_dir, fqbn=board_dict['matching_boards'][0]['fqbn'])
         except pyduinocli.ArduinoError as e:
             print(e.result['__stderr'])
             print('Compile failed')
-            return
+            return 'Compile failed'
         except KeyError as e:
             print(e)
             print('Can\'t compile with this board')
-            return
+            return 'Can\'t compile with this board'
         else:
             print('Compile success')
 
         try:
-            print('Uploading ' + sketch_dir + ' with ' + self.boards['result'][board_index]['matching_boards'][0]['name'] + ' ' + self.boards['result'][board_index]['port']['address'])
-            self.arduino.upload(sketch_dir, fqbn=self.boards['result'][board_index]['matching_boards'][0]['fqbn'], port=self.boards['result'][board_index]['port']['address'])
+            print('Uploading ' + sketch_dir + ' with ' + board_dict['matching_boards'][0]['name'] + ' ' + board_dict['port']['address'])
+            self.arduino.upload(sketch_dir, fqbn=board_dict['matching_boards'][0]['fqbn'], port=board_dict['port']['address'])
         except pyduinocli.ArduinoError as e:
             print(e.result['__stderr'])
             print('Upload failed')
-            return
+            return 'Upload failed'
         except KeyError as e:
             print('Can\'t upload with this board')
-            return
+            return 'Can\'t upload with this board'
         else:
             print('Upload success')
+            return 'Upload success'
+
+

@@ -1,8 +1,11 @@
 
+import json
 
 class keymap_generator:
 
-    def __init__(self, keymapTemplate_dir  = 'keymapTemplate'):
+    def __init__(self, keymapTemplate_dir  = 'keymap_template', key_list_path = 'keycodeList.json'):
+        with open(key_list_path, 'r') as f:
+            self.keycodeList = json.load(f)
         self.keymapTemplata_dir = keymapTemplate_dir
         self.keymapRow = 7 * 16  # 7 rows each 16 profiles
         self.keymapCol = 8       # 8 columns
@@ -10,23 +13,53 @@ class keymap_generator:
         with open(self.keymapTemplata_dir, 'r') as f:
             self.keymapTemplate = f.read()
 
+
+    def convert_keymapFile_to_keymap(self, keymapFile_path):
+        keymap = []
+        with open(keymapFile_path, 'r') as f:
+            keymapData = json.load(f)
+        mappingRule = keymapData['mappingRule']
+        for rule in mappingRule:
+            self.ret = keymapData
+            for i in rule:
+                self.ret = self.ret[i]
+            keymap.append(self.ret)
+        print('Keymap', end='')
+        print(keymap)
+        #json.dump(keymap, open('test_out.json', 'w'), ensure_ascii=False, indent=4, sort_keys=False, separators=(',', ': '))
+
+        # replace keymap with keycode
+        for i, row in enumerate(keymap):
+            for j, col in enumerate(row):
+                if isinstance(col, str):
+                    try:
+                        keymap[i][j] = self.keycodeList['keyList'][col][1]
+
+                    except KeyError:
+                        print('Keycode not found: ' + col + ' at ' + str(i) + ', ' + str(j))
+                        return -1
+        print('Keymap_keycode', end='')
+        print(keymap)
+        return keymap
+
+
     def generate_keymap_file(self, keymap, output_dir):
         self.keymapFile_dir = output_dir
         # Check keymap size
         if len(keymap) != self.keymapRow:
             print('keymap row size error')
-            return
+            return 'keymap row size error'
         else:
             for col in keymap:
                 if len(col) != self.keymapCol:
                     print('keymap column size error')
-                    return
+                    return 'keymap column size error'
                 else:
                     for key in col:
                         if isinstance(key, list):
                             print(
                                 'Keymap dimension is too high. It must be 2D array.')
-                            return
+                            return 'Keymap dimension is too high. It must be 2D array.'
         # Generate keymap file
         keymap_text = self.keymapTemplate + \
             self.generate_cpp_array_from_python_array(
@@ -34,6 +67,7 @@ class keymap_generator:
         with open(self.keymapFile_dir, 'w') as f:
             f.write(keymap_text)
         print(self.keymapFile_dir + ' generated.')
+        return 0
 
     def generate_cpp_array_from_python_array(self, arrayName, keymap):
         self.cpp_array = ''

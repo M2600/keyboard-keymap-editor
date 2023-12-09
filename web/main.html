@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/e59db79247.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="/eel.js"></script>
+    <title>Keyboard-keymap-editor</title>
+</head>
+<body>
+    <header id="header">
+
+    </header>
+
+    <main id="main">
+        <div id="keyboard-menu">
+            <div id="menu-bar">
+                <div id="select-layout" class="menu-item" style="display: none;">
+                    <button id="select-layout-button" class="menu-button"><i class="fa-solid fa-upload fa-sm"></i> Load Layout <i class="fa-solid fa-caret-down fa-xs"></i></button>
+                    <ul id="select-layout-list" class="dropdown-menu">
+                        <!-- JS inputs something here -->
+                    </ul>
+                </div>
+                <div id="select-keymap" class="menu-item">
+                    <button id="select-keymap-button" class="menu-button"><i class="fa-solid fa-upload fa-sm"></i> Load Keymap <i class="fa-solid fa-caret-down fa-xs"></i></button>
+                    <ul id="select-keymap-list", class="dropdown-menu">
+                        <!-- JS inputs something here -->
+                    </ul>
+                </div>
+
+                <div id="write-keymap" class="menu-item">
+                    <button id="write-keymap-button" class="menu-button"><i class="fa-solid fa-pen-to-square fa-sm" style="color: #ffffff;"></i> Write Keymap</button>
+                    <div id="write-window-bg" class="popup-window-bg"  style="display: none">
+                        <div id="write-window" class="popup-window">
+                            <div id="write-window-header" class="popup-window-header">
+                                <h3 id="write-window-title" class="popup-window-title">Write Keymap</h3>
+                                <button id="write-window-close-button" class="popup-window-close-button"><i class="fa-solid fa-times fa-xs"></i></button>
+                            </div>
+                            <div id="write-window-body" class="popup-window-body">
+                                <div id="write-window-body-select-keymap" class="popup-window-body-block">
+                                    <h4 id="write-window-body-select-keymap-title" class="popup-window-body-block-title">Select Keymap</h4>
+                                    <div id="write-window-body-select-keymap-body" class="popup-window-body-block-body">
+                                        <!-- JS inputs something here -->
+                                    </div>
+                                </div>
+                                <div id="write-window-body-select-board" class="popup-window-body-block">
+                                    <h4 id="write-window-body-select-board-title" class="popup-window-body-block-title">Select Board</h4>
+                                    <div id="write-window-body-select-board-body" class="popup-window-body-block-body">
+                                        <div id="write-window-body-select-board-body-guide" class="popup-window-body-block-body-guide">
+                                            <div class="popup-window-body-block-body-guide-item">
+                                                <p>Board Name</p>
+                                            </div>
+                                            <div class="popup-window-body-block-body-guide-item">
+                                                <p>Board Port</p>
+                                            </div>
+                                            <div class="popup-window-body-block-body-guide-item">
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        <!-- JS inputs something here -->
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div id="write-window-footer" class="popup-window-footer">
+                                <div id="write-window-footer-message" class="popup-window-footer-message">
+                                    <p id="write-window-footer-message-text" class="popup-window-footer-message-text">Select keymap and board</p>
+                                </div>
+                                <div id="write-window-footer-write" class="popup-window-footer-write">
+                                    <button id="write-window-footer-write-button" class="popup-window-footer-write-button">Write</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="save-keymap" class="menu-item">
+                    <button id="save-keymap-button" class="menu-button"><i class="fa-solid fa-floppy-disk fa-sm" style="color: #ffffff;"></i> Save Keymap</button>
+                    <div id="save-dialog" class="dialog" style="display: none">
+                        <div id="save-dialog-arrow" class="dialog-arrow"></div>
+                        <p id="save-dialog-message" class="dialog-message">Saved!</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div id="keyboard">
+            <div id="keyboard-bg">
+                <!-- JS inputs something here... -->
+            </div>
+        </div>
+
+        <div id="keyboard-control">
+            <div id="keyboard-control-change-layer" class="keybaord-control-item">
+                <div id="keyboard-control-change-layer-div" class="keyboard-control-item-div">
+                    <!--  JS inputs something here ...  -->
+                </div>
+            </div>
+
+        </div>
+
+        <div id="key-property">
+            <div id="key-property-menu">
+                <ul id="key-property-menu-list">
+                    <li id="property-tab-button" class="key-property-menu-item active">Key Properties</li>
+                    <li id="description-tab-button" class="key-property-menu-item">Keymap Properties</li>
+                </ul>
+            </div>
+            <div id="key-property-body">
+                <div id="property-tab-button-body" class="key-property-body-item">
+                    <div id="key-labels" class="key-property-tab-item">
+                        <!-- JS inputs something -->
+                    </div>
+                </div>
+                <div id="description-tab-button-body" class="key-property-body-item">
+                    <div id="'keymap-name" class="key-property-tab-item">
+                        <label class="keymap-property-label">Keymap Name:</label>
+                        <input id="keymap-name-input" class="keymap-name-input" type="text" placeholder="Keymap name...">
+                    </div> 
+                    <div id="keymap-description" class="key-property-tab-item">
+                        <label class="keymap-property-label">Keymap Description:</label>
+                        <textarea id="keymap-description-textarea" class="keymap-description-textarea" placeholder="Keymap description..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer id="footer">
+        <div id="" class="footer-item">
+            <p class="footer-text">Made by <a href="https://github.com/m2600/">M260</a></p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
