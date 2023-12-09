@@ -4,7 +4,7 @@ Graphical keyboard layout editor for [numeric-keypad](https://github.com/m2600/n
 ## Requirements (Windows)
 
 - Python3
-- Arduino-cli
+- Arduino-cli (Add to path)
 
 
 ### pip packages
