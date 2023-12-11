@@ -29,12 +29,12 @@ Linux based systems need to add user account to system group to access USB devic
 ### Arch Linux
 
 ```shell
-$ sudo gpasswd -a $USER uucp
-$ sudo gpasswd -a $USER lock
+sudo gpasswd -a $USER uucp
+sudo gpasswd -a $USER lock
 ```
 
 ## Usage
 
 ```shell
-$ python3 main.py
+python3 main.py
 ```
