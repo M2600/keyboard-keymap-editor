@@ -8,14 +8,11 @@
 /main
 /main.lnk
 
-/build
 
 /keymap.h
 /KeyboardNico/KeyboardNico/keymap.h
 
 /test*.py
-/build/main
-/dist/main*
 
 
 /.venv
