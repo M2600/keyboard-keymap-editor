@@ -25,6 +25,10 @@ Linux based systems need to install following packages.
 
 Linux based systems need to add user account to system group to access USB device.
 
+### Ubuntu
+```shell
+sudo adduser $USER dialout
+```
 
 ### Arch Linux
 
