@@ -3,7 +3,7 @@ Graphical keyboard layout editor for [numeric-keypad](https://github.com/m2600/n
 
 
 ## Requirements
-Linux based systems need to install following packages.
+
 
 - Python3
 - Arduino-cli
@@ -23,7 +23,7 @@ Linux based systems need to install following packages.
 ## Setup (Linux)
 
 
-Linux based systems need to add user account to system group to access USB device.
+Linux based systems need to add user account to some system group to access USB devices.
 
 ### Ubuntu
 ```shell
