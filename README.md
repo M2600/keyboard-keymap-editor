@@ -1,5 +1,5 @@
-# keyboard-layout-editor
-Graphical keyboard layout editor for [numeric-keypad](https://github.com/m2600/numeric-keypad)
+# keyboard-keymap-editor
+Graphical keyboard keymap editor for [numeric-keypad](https://github.com/m2600/numeric-keypad)
 
 
 ## Requirements
