@@ -15,6 +15,13 @@
     --color-primary-disabled: #ff7675;
     --color-primary-border: #0984e3;
 
+    --color-secondary: #fdab59;
+    --color-secondary-hover: #f0932b;
+    --color-secondary-active: #e67e22;
+    --color-secondary-disabled: #2b89f5;
+    --color-secondary-border: #fdab59;
+
+
 }
 
 
@@ -152,13 +159,13 @@ main {
 
 #keyboard-menu #select-layout-button, #select-keymap-button {
     color: #333;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: var( --color-secondary);
+    border: 1px solid var(--color-secondary-border);
     border-radius: 4px;
 }
 
 #keyboard-menu #select-layout-button:hover, #select-keymap-button:hover {
-    background-color: #eee !important;
+    background-color: var(--color-secondary-hover) !important;
     cursor: pointer;
 } 
 
@@ -629,7 +636,8 @@ main {
 }
 
 .key-input-select {
-    border: 1px solid #ccc;
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-secondary-border);
     border-radius: 4px;
     padding: 3px;
 }
