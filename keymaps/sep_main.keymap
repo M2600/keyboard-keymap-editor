@@ -1,5 +1,5 @@
 {
-    "name": "separate_main",
+    "name": "sep_main",
     "description": "separate keyboard.",
     "layout": "separate",
     "mappingRule": [
@@ -917,7 +917,7 @@
                     "U",
                     "I",
                     "O",
-                    "P",
+                    "PRINT_SCREEN",
                     "[",
                     "PAGE_UP"
                 ],
