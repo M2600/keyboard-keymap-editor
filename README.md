@@ -6,7 +6,7 @@ Graphical keyboard keymap editor for [numeric-keypad](https://github.com/m2600/n
 
 
 - Python3
-- Arduino-cli
+- Arduino-cli (Add to Path)
 
 ### pip packages
 
