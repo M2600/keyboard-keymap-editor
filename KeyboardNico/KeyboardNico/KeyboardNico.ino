@@ -186,6 +186,11 @@ bool leftSide;
 #define KEY_KEYPAD_DIVIDE   0xDC  // /
 #define KEY_KEYPAD_NUMLOCK  0xDB
 
+#define KEY_CON_MEDIA_PLAY_PAUSE 0xF1
+#define KEY_CON_MEDIA_STOP 0xF2
+#define KEY_CON_MEDIA_PREVIOUS 0xF3
+#define KEY_CON_MEDIA_NEXT 0xF4
+
 
 //======================================
 
@@ -868,6 +873,26 @@ void loop() {
             Consumer.press(MEDIA_VOLUME_DOWN);
             pressed = 1;
           }
+          else if (keyMap[ii + option][jj] == KEY_CON_MEDIA_PLAY_PAUSE)
+          {
+            Consumer.press(MEDIA_PLAY_PAUSE);
+            pressed = 1;
+          }
+          else if (keyMap[ii + option][jj] == KEY_CON_MEDIA_STOP)
+          {
+            Consumer.press(MEDIA_STOP);
+            pressed = 1;
+          }
+          else if (keyMap[ii + option][jj] == KEY_CON_MEDIA_NEXT)
+          {
+            Consumer.press(MEDIA_NEXT);
+            pressed = 1;
+          }
+          else if (keyMap[ii + option][jj] == KEY_CON_MEDIA_PREVIOUS)
+          {
+            Consumer.press(MEDIA_PREVIOUS);
+            pressed = 1;
+          }
           else if (keyMap[ii + option][jj] == KEY_MAIL)
           {
             if (keyboardEnabled)
@@ -1151,6 +1176,26 @@ void loop() {
             pressed = 0;
             Consumer.release(MEDIA_VOLUME_DOWN);
           }
+          if (keyMap[ii + option][jj] == KEY_CON_MEDIA_PLAY_PAUSE)
+          {
+            pressed = 0;
+            Consumer.release(MEDIA_PLAY_PAUSE);
+          }
+          if (keyMap[ii + option][jj] == KEY_CON_MEDIA_STOP)
+          {
+            pressed = 0;
+            Consumer.release(MEDIA_STOP);
+          }
+          if (keyMap[ii + option][jj] == KEY_CON_MEDIA_NEXT)
+          {
+            pressed = 0;
+            Consumer.release(MEDIA_NEXT);
+          }
+          if (keyMap[ii + option][jj] == KEY_CON_MEDIA_PREVIOUS)
+          {
+            pressed = 0;
+            Consumer.release(MEDIA_PREVIOUS);
+          }
           else
           {
             pressed = 0;
@@ -1393,6 +1438,26 @@ void readSerial()
       else if (keyMap[row1 + option1][col1] == KEY_VOLUMEDOWN)
       {
         Consumer.press(MEDIA_VOLUME_DOWN);
+        pressed = 1;
+      }
+      else if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_PLAY_PAUSE)
+      {
+        Consumer.press(MEDIA_PLAY_PAUSE);
+        pressed = 1;
+      }
+      else if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_STOP)
+      {
+        Consumer.press(MEDIA_STOP);
+        pressed = 1;
+      }
+      else if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_NEXT)
+      {
+        Consumer.press(MEDIA_NEXT);
+        pressed = 1;
+      }
+      else if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_PREVIOUS)
+      {
+        Consumer.press(MEDIA_PREVIOUS);
         pressed = 1;
       }
       else if (keyMap[row1 + option1][col1] == KEY_MAIL)
@@ -1673,6 +1738,31 @@ void readSerial()
       {
         pressed = 0;
         Consumer.release(MEDIA_VOLUME_DOWN);
+      }
+      if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_PLAY_PAUSE)
+      {
+        pressed = 0;
+        Consumer.release(MEDIA_PLAY_PAUSE);
+      }
+      if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_STOP)
+      {
+        pressed = 0;
+        Consumer.release(MEDIA_STOP);
+      }
+      if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_NEXT)
+      {
+        pressed = 0;
+        Consumer.release(MEDIA_NEXT);
+      }
+      if (keyMap[row1 + option1][col1] == KEY_CON_MEDIA_PREVIOUS)
+      {
+        pressed = 0;
+        Consumer.release(MEDIA_PREVIOUS);
+      }
+      else
+      {
+        pressed = 0;
+        sendKey(keyMap[row1 + option1][col1], pressed);
       }
       if (keyMap[row1 + option1][col1] == KEY_ARLS)
       {
