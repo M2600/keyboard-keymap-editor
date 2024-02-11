@@ -70,6 +70,26 @@
             "KEY_VOLUMEDOWN",
             ""
         ],
+        "MEDIA_PLAY": [
+            "PLAY",
+            "KEY_CON_MEDIA_PLAY_PAUSE",
+            ""
+        ],
+        "MEDIA_STOP": [
+            "STOP",
+            "KEY_CON_MEDIA_STOP",
+            ""
+        ],
+        "MEDIA_NEXT": [
+            "NEXT",
+            "KEY_CON_MEDIA_NEXT",
+            ""
+        ],
+        "MEDIA_PREV": [
+            "PREV",
+            "KEY_CON_MEDIA_PREVIOUS",
+            ""
+        ],
         "MOUSE_UP": [
             "MUP",
             "KEY_MUP",
