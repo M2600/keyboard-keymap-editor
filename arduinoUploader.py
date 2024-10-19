@@ -26,8 +26,8 @@ class arduino_uploader:
             print('No arduino board detected.')
             return -1
         else:
-            print(str(len(self.boards['result'])) + ' board(s) found. select board with index.')
-        for i, board in enumerate(self.boards['result']):
+            print(str(len(self.boards['result']['detected_ports'])) + ' board(s) found. select board with index.')
+        for i, board in enumerate(self.boards['result']['detected_ports']):
             try:
                 board_name = board['matching_boards'][0]['name']
             except KeyError:
@@ -44,7 +44,7 @@ class arduino_uploader:
         while True:
             self.input = input('select board: ')
             try:
-                print('Selected: \"' + self.boards['result'][int(self.input)]['matching_boards'][0]['name'] + '\": \"' + self.boards['result'][int(self.input)]['port']['address'] + '\"')
+                print('Selected: \"' + self.boards['result']['detected_ports'][int(self.input)]['matching_boards'][0]['name'] + '\": \"' + self.boards['result']['detected_ports'][int(self.input)]['port']['address'] + '\"')
                 return int(self.input)
             except(Exception):
                 print('Invalid input')
