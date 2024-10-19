@@ -828,6 +828,8 @@ void loop() {
           else if (keyMap[ii + option][jj] == KEY_FN)
           {
             //Keyboard.releaseAll();
+            BootMouse.releaseAll();
+            BootKeyboard.releaseAll();
             fnKeyPushed = true;
             pressed = 1;
             Serial.println(F("FNKeyPushed!"));
@@ -835,12 +837,14 @@ void loop() {
           else if (keyMap[ii + option][jj] == KEY_RAIS)
           {
             BootKeyboard.releaseAll();
+            BootMouse.releaseAll();
             raisKeyPushed = true;
             pressed = 1;
           }
           else if (keyMap[ii + option][jj] == KEY_LOWE)
           {
             BootKeyboard.releaseAll();
+            BootMouse.releaseAll();
             loweKeyPushed = true;
             pressed = 1;
           }
@@ -1088,6 +1092,7 @@ void loop() {
             pressed = 0;
             BootKeyboard.releaseAll();
             Consumer.releaseAll();
+            BootMouse.releaseAll();
             //ConsumerControl.release();
             Serial.println(F("FNKeyreleased!"));
           }
@@ -1097,6 +1102,7 @@ void loop() {
             pressed = 0;
             BootKeyboard.releaseAll();
             Consumer.releaseAll();
+            BootMouse.releaseAll();
           }
           if (keyMap[ii + option][jj] == KEY_LOWE)
           {
@@ -1105,6 +1111,7 @@ void loop() {
             stopMouseMove(0);
             BootKeyboard.releaseAll();
             Consumer.releaseAll();
+            BootMouse.releaseAll();
           }
           if (keyMap[ii + option][jj] == KEY_CPFL)
           {
@@ -1396,18 +1403,21 @@ void readSerial()
       else if (keyMap[row1 + option1][col1] == KEY_FN)
       {
         BootKeyboard.releaseAll();
+        BootMouse.releaseAll();
         fnKeyPushed = true;
         pressed = 1;
       }
       else if (keyMap[row1 + option1][col1] == KEY_RAIS)
       {
         BootKeyboard.releaseAll();
+        BootMouse.releaseAll();
         raisKeyPushed = true;
         pressed = 1;
       }
       else if (keyMap[row1 + option1][col1] == KEY_LOWE)
       {
         BootKeyboard.releaseAll();
+        BootMouse.releaseAll();
         loweKeyPushed = true;
         pressed = 1;
       }
@@ -1622,6 +1632,7 @@ void readSerial()
         fnKeyPushed = false;
         BootKeyboard.releaseAll();
         Consumer.releaseAll();
+        BootMouse.releaseAll();
         //ConsumerControl.release();
       }
 
@@ -1657,12 +1668,14 @@ void readSerial()
       {
         BootKeyboard.releaseAll();
         Consumer.releaseAll();
+        BootMouse.releaseAll();
         raisKeyPushed = false;
       }
       if (keyMap[row1 + option1][col1] == KEY_LOWE)
       {
         BootKeyboard.releaseAll();
         Consumer.releaseAll();
+        BootMouse.releaseAll();
         stopMouseMove(0);
         loweKeyPushed = false;
       }
