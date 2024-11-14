@@ -516,15 +516,15 @@ async function showArduinosWriteWindow() {
         return;
     }
 
-    for (let i = 0; i < arduinoList['result'].length; i++) {
+    for (let i = 0; i < arduinoList['result']['detected_ports'].length; i++) {
         try {
-            boardName = arduinoList['result'][i]['matching_boards'][0]['name'];
+            boardName = arduinoList['result']['detected_ports'][i]['matching_boards'][0]['name'];
         }
         catch {
             boardName = 'unknown';
         }
         try {
-            boardPort = arduinoList['result'][i]['port']['address'];
+            boardPort = arduinoList['result']['detected_ports'][i]['port']['address'];
         }
         catch {
             boardPort = 'unknown';
@@ -555,7 +555,7 @@ async function showArduinosWriteWindow() {
             boardSelectButton.innerHTML = 'Selected';
             boardSelectButton.disabled = true;
 
-            writeConfig['board'] = arduinoList['result'][i];
+            writeConfig['board'] = arduinoList['result']['detected_ports'][i];
             if (checkWriteConfig(writeConfig)) {
                 writeButton.disabled = false;
             }

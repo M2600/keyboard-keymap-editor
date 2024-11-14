@@ -1,5 +1,5 @@
 {
-    "name": "separate",
+    "name": "sep_main",
     "description": "separate keyboard.",
     "layout": "separate",
     "mappingRule": [

@@ -167,6 +167,11 @@
 #define KEY_KEYPAD_DIVIDE 0xDC   // /
 #define KEY_KEYPAD_NUMLOCK 0xDB
 
+#define KEY_CON_MEDIA_PLAY_PAUSE 0x200
+#define KEY_CON_MEDIA_STOP 0x201
+#define KEY_CON_MEDIA_PREVIOUS 0x202
+#define KEY_CON_MEDIA_NEXT 0x203
+
 const byte keyMap[14 / 2 * 16][16 / 2] = {
     // left
     {KEY_ESCP, KEY_FU1, KEY_FU2, KEY_FU3, KEY_FU4, KEY_FU5, KEY_FU6, NONE},
