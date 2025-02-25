@@ -800,30 +800,38 @@ void loop() {
           if (keyMap[ii + option][jj] == KEY_LSFT)
           {
             pressed = 1;
-            BootKeyboard.press(KEY_LEFT_SHIFT);
+            //BootKeyboard.press(KEY_LEFT_SHIFT);
             leftShiftPushed = true;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
             MouseConstant = MouseHighConstant;
           }
           else if (keyMap[ii + option][jj] == KEY_RSFT)
           {
             pressed = 1;
-            BootKeyboard.press(KEY_RIGHT_SHIFT);
+            //BootKeyboard.press(KEY_RIGHT_SHIFT);
             rightShiftPushed = true;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
             MouseConstant = MouseHighConstant;
           }
           else if (keyMap[ii + option][jj] == KEY_LCTL)
           {
             pressed = 1;
             leftControlPushed = true;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
           }
           else if (keyMap[ii + option][jj] == KEY_RCTL)
           {
             pressed = 1;
             rightControlPushed = true;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
           }
           else if (keyMap[ii + option][jj] == KEY_FN)
           {
@@ -1063,27 +1071,35 @@ void loop() {
           {
             pressed = 0;
             leftShiftPushed = false;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
             MouseConstant = MouseLowConstant;
           }
           if (keyMap[ii + option][jj] == KEY_RSFT)
           {
             pressed = 0;
             rightShiftPushed = false;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
             MouseConstant = MouseLowConstant;
           }
           if (keyMap[ii + option][jj] == KEY_LCTL)
           {
             pressed = 0;
             leftControlPushed = false;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
           }
           if (keyMap[ii + option][jj] == KEY_RCTL)
           {
             pressed = 0;
             rightControlPushed = false;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
           }
 
           if (keyMap[ii + option][jj] == KEY_FN)
@@ -1206,7 +1222,9 @@ void loop() {
           else
           {
             pressed = 0;
-            sendKey( keyMap[ii + option][jj], pressed);
+            if(keyboardEnabled){
+              sendKey( keyMap[ii + option][jj], pressed);
+            }
           }
         }
         digitalWrite(led, !currentState[ii][jj]);
@@ -1375,30 +1393,38 @@ void readSerial()
       if (keyMap[row1 + option1][col1] == KEY_LSFT)
       {
         pressed = 1;
-        BootKeyboard.press(KEY_LEFT_SHIFT);
+        //BootKeyboard.press(KEY_LEFT_SHIFT);
         leftShiftPushed = true;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
         MouseConstant = MouseHighConstant;
       }
       else if (keyMap[row1 + option1][col1] == KEY_RSFT)
       {
         pressed = 1;
-        BootKeyboard.press(KEY_RIGHT_SHIFT);
+        //BootKeyboard.press(KEY_RIGHT_SHIFT);
         rightShiftPushed = true;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
         MouseConstant = MouseHighConstant;
       }
       else if (keyMap[row1 + option1][col1] == KEY_LCTL)
       {
         pressed = 1;
         leftControlPushed = true;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
       }
       else if (keyMap[row1 + option1][col1] == KEY_RCTL)
       {
         pressed = 1;
         rightControlPushed = true;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
       }
       else if (keyMap[row1 + option1][col1] == KEY_FN)
       {
@@ -1640,27 +1666,35 @@ void readSerial()
       {
         pressed = 0;
         leftShiftPushed = false;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
         MouseConstant = MouseLowConstant;
       }
       if (keyMap[row1 + option1][col1] == KEY_RSFT)
       {
         pressed = 0;
         rightShiftPushed = false;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
         MouseConstant = MouseLowConstant;
       }
       if (keyMap[row1 + option1][col1] == KEY_LCTL)
       {
         pressed = 0;
         leftControlPushed = false;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
       }
       if (keyMap[row1 + option1][col1] == KEY_RCTL)
       {
         pressed = 0;
         rightControlPushed = false;
-        sendKey( keyMap[row1 + option1][col1], pressed);
+        if(keyboardEnabled){
+          sendKey( keyMap[row1 + option1][col1], pressed);
+        }
       }
 
 
